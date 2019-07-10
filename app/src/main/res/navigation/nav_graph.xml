@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
-            app:startDestination="@id/mainFragment">
-
-    <fragment android:id="@+id/mainFragment" android:name="com.pericle.guessthecar.MainFragment"
-              android:label="fragment_main" tools:layout="@layout/fragment_main"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/levelsFragment">
+    <fragment
+        android:id="@+id/levelsFragment"
+        android:name="com.pericle.guessthecar.levels.LevelsFragment"
+        android:label="LevelsFragment"
+        tools:layout="@layout/fragment_levels" />
 </navigation>
