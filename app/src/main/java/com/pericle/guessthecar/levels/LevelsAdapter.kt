@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.pericle.guessthecar.databinding.ListItemLevelBinding
 
-class LevelsAdapter : RecyclerView.Adapter<LevelsAdapter.ViewHolder>() {
+class LevelsAdapter(val clickListener: LevelListener) : RecyclerView.Adapter<LevelsAdapter.ViewHolder>() {
 
     var data = listOf<Level>()
         set(value) {
@@ -21,14 +21,15 @@ class LevelsAdapter : RecyclerView.Adapter<LevelsAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = data[position]
-        holder.bind(item)
+        holder.bind(clickListener, item)
     }
 
     class ViewHolder private constructor(val binding: ListItemLevelBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Level) {
+        fun bind(clickListener: LevelListener, item: Level) {
             binding.level = item
+            binding.clickListener = clickListener
             binding.executePendingBindings()
         }
 
@@ -41,4 +42,8 @@ class LevelsAdapter : RecyclerView.Adapter<LevelsAdapter.ViewHolder>() {
             }
         }
     }
+}
+
+class LevelListener(val clickListener: (level: Level) -> Unit) {
+    fun onClick(level: Level) = clickListener(level)
 }

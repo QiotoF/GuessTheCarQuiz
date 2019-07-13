@@ -10,6 +10,10 @@
             name="level"
             type="com.pericle.guessthecar.levels.Level" />
 
+        <variable
+            name="clickListener"
+            type="com.pericle.guessthecar.levels.LevelListener" />
+
     </data>
 
     <androidx.cardview.widget.CardView
@@ -18,8 +22,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:clickable="true"
-        android:foreground="?android:attr/selectableItemBackground"
         android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:onClick="@{() -> clickListener.onClick(level)}"
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="4dp">
 
@@ -39,7 +44,7 @@
                 android:layout_marginBottom="8dp"
                 android:backgroundTintMode="add"
                 android:scaleType="centerCrop"
-                android:src="@{level.imgResourse}"
+                android:src="@drawable/car"
                 android:tintMode="screen"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -71,15 +76,14 @@
             <ProgressBar
                 android:id="@+id/level_progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="313dp"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:progress="@{level.progress}"
                 app:layout_constraintBottom_toBottomOf="@+id/level_progress_text"
                 app:layout_constraintEnd_toStartOf="@+id/level_progress_text"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/level_image"
                 app:layout_constraintTop_toBottomOf="@+id/level_title"
                 tools:progress="40" />
 

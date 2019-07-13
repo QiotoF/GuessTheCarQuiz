@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.databinding.FragmentLevelsBinding
 
@@ -26,9 +29,24 @@ class LevelsFragment : Fragment() {
             Level("Countries", R.drawable.car, 88),
             Level("Brands", R.drawable.car, 1)
         )
-        val adapter = LevelsAdapter()
+
+        val viewModel = ViewModelProviders.of(this).get(LevelsViewModel::class.java)
+
+        val adapter = LevelsAdapter(LevelListener { level ->
+            viewModel.onLevelClicked(level)
+        })
         binding.levelsList.adapter = adapter
         adapter.data = data
+
+        viewModel.navigateToQuiz.observe(this, Observer { level ->
+            level?.let {
+                this.findNavController().navigate(
+                    LevelsFragmentDirections
+                        .actionLevelsFragmentToQuizFragment(level)
+                )
+                viewModel.onQuizNavigated()
+            }
+        })
 
         return binding.root
     }
