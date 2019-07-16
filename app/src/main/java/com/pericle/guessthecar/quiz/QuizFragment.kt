@@ -1,29 +1,35 @@
 package com.pericle.guessthecar.quiz
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.pericle.guessthecar.R
+import com.pericle.guessthecar.database.CarDatabase
+import com.pericle.guessthecar.databinding.FragmentQuizBinding
 
 class QuizFragment : Fragment() {
 
-    private lateinit var viewModel: QuizViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.quiz_fragment, container, false)
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(QuizViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
+        val binding: FragmentQuizBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_quiz, container, false
+        )
+        binding.lifecycleOwner = this
 
+        val application = requireNotNull(this.activity).application
+        val dataSource = CarDatabase.getInstance(application).carDao
+        val viewModelFactory = QuizViewModelFactory(dataSource, application)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel::class.java)
+        binding.viewModel = viewModel
+
+        return binding.root
+    }
 }

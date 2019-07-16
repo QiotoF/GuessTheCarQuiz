@@ -17,4 +17,6 @@ class LevelsViewModel : ViewModel() {
     fun onQuizNavigated() {
         _navigateToQuiz.value = null
     }
+
+
 }

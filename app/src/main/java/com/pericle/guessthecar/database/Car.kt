@@ -6,13 +6,15 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "car_table")
 data class Car(
 
-    @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L,
+    var imgSrc: List<String>,
 
     var brand: String,
 
     var model: String,
 
-    var country: String
+    var country: String,
+
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0L
 
 )

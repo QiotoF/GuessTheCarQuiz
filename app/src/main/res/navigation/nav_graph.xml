@@ -19,7 +19,7 @@
         android:id="@+id/quizFragment"
         android:name="com.pericle.guessthecar.quiz.QuizFragment"
         android:label="quiz_fragment"
-        tools:layout="@layout/quiz_fragment" >
+        tools:layout="@layout/fragment_quiz" >
         <argument
             android:name="level"
             app:argType="com.pericle.guessthecar.levels.Level" />

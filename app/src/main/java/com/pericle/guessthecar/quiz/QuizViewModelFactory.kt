@@ -1,0 +1,20 @@
+package com.pericle.guessthecar.quiz
+
+import android.app.Application
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.pericle.guessthecar.database.CarDao
+
+class QuizViewModelFactory(
+    private val dataSource: CarDao,
+    private val application: Application
+) : ViewModelProvider.Factory {
+    @Suppress("unchecked_cast")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(QuizViewModel::class.java)) {
+            return QuizViewModel(dataSource, application) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
+}
+
