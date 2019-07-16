@@ -1,11 +1,8 @@
 package com.pericle.guessthecar.quiz
 
 import android.app.Application
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.pericle.guessthecar.database.Car
 import com.pericle.guessthecar.database.CarDao
 import kotlinx.coroutines.*
@@ -19,12 +16,12 @@ class QuizViewModel(val database: CarDao, val app: Application) : AndroidViewMod
     private lateinit var carIterator: ListIterator<Car>
 
 
-    private val _currentCar = MutableLiveData<Car>()
+    val currentCar = MutableLiveData<Car>()
 
-    val currentImg: LiveData<Drawable> = Transformations.map(_currentCar) {
-        Drawable.createFromStream(app.assets.open(it.imgSrc.random()), null)
-    }
-
+    val firstAnsw = MutableLiveData<String>()
+    val secAnsw = MutableLiveData<String>()
+    val thirdAnsw = MutableLiveData<String>()
+    val fourthAnsw = MutableLiveData<String>()
 
     init {
         initialiseCars()
@@ -44,11 +41,27 @@ class QuizViewModel(val database: CarDao, val app: Application) : AndroidViewMod
         }
     }
 
+    private lateinit var answers: MutableList<String>
+
     fun onNextClick() {
         if (carIterator.hasNext()) {
-            _currentCar.value = carIterator.next()
+            currentCar.value = carIterator.next()
+
+            val car = currentCar.value
+            answers = cars
+                .map { it.model }
+                .filter { it != car?.model }
+                .distinct()
+                .shuffled()
+                .take(3)
+                .toMutableList()
+            answers.add(car!!.model)
+            answers.shuffle()
+            firstAnsw.value = answers[0]
+            secAnsw.value = answers[1]
+            thirdAnsw.value = answers[2]
+            fourthAnsw.value = answers[3]
         }
     }
-
-
 }
+

@@ -50,9 +50,9 @@ class MainActivity : AppCompatActivity() {
         )
         val application = requireNotNull(this).application
         database = CarDatabase.getInstance(application).carDao
-//        uiScope.launch {
-//            insertAll(cars)
-//        }
+        uiScope.launch {
+            insertAll(cars)
+        }
     }
 
     private suspend fun insertAll(cars: List<Car>) {
