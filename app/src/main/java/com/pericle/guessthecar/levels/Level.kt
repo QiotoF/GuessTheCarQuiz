@@ -1,11 +1,12 @@
 package com.pericle.guessthecar.levels
 
 import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
+import com.pericle.guessthecar.database.Car
 
-@Parcelize
-data class Level(
-    val name: String,
-    val imgResource: Int,
-    val progress: Int
-) : Parcelable
+abstract class Level : Parcelable {
+
+    abstract val name: String
+
+    abstract fun createAnswerList(car: Car?, cars: List<Car>): MutableList<String>
+}
+

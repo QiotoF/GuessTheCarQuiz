@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         val application = requireNotNull(this).application
         database = CarDatabase.getInstance(application).carDao
         uiScope.launch {
-            insertAll(cars)
+//            insertAll(cars)
         }
     }
 

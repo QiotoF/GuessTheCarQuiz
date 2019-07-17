@@ -24,10 +24,8 @@ class LevelsFragment : Fragment() {
         )
         binding.lifecycleOwner = this
 
-        val data = listOf<Level>(
-            Level("Models", R.drawable.car, 44),
-            Level("Countries", R.drawable.car, 88),
-            Level("Brands", R.drawable.car, 1)
+        val data = listOf(
+            BrandLevel, ModelLevel
         )
 
         val viewModel = ViewModelProviders.of(this).get(LevelsViewModel::class.java)
