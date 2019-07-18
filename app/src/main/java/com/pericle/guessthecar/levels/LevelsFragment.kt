@@ -24,17 +24,13 @@ class LevelsFragment : Fragment() {
         )
         binding.lifecycleOwner = this
 
-        val data = listOf(
-            BrandLevel, ModelLevel
-        )
-
         val viewModel = ViewModelProviders.of(this).get(LevelsViewModel::class.java)
 
         val adapter = LevelsAdapter(LevelListener { level ->
             viewModel.onLevelClicked(level)
         })
         binding.levelsList.adapter = adapter
-        adapter.data = data
+        adapter.data = viewModel.data
 
         viewModel.navigateToQuiz.observe(this, Observer { level ->
             level?.let {

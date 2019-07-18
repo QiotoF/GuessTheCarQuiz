@@ -6,6 +6,10 @@ import androidx.lifecycle.ViewModel
 
 class LevelsViewModel : ViewModel() {
 
+    val data = listOf(
+        BrandLevel, ModelLevel, CountryLevel
+    )
+
     private val _navigateToQuiz = MutableLiveData<Level>()
     val navigateToQuiz: LiveData<Level>
         get() = _navigateToQuiz

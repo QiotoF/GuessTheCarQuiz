@@ -22,7 +22,7 @@ class QuizViewModel(
 
     val currentCar = MutableLiveData<Car>()
 
-    private lateinit var answers: MutableList<String>
+    private lateinit var answers: MutableList<String?>
     val firstAnswer = MutableLiveData<String>()
     val secAnswer = MutableLiveData<String>()
     val thirdAnswer = MutableLiveData<String>()
