@@ -9,5 +9,5 @@ class CarConverters {
 
 
     @TypeConverter
-    fun stringToList(string: String): List<String> = listOf(string)
+    fun stringToList(string: String): List<String> = string.split(",").map{it.trim()}
 }

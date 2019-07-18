@@ -42,16 +42,16 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(binding.navView, navController)
 
         val cars = listOf(
-            Car(listOf("dodge_viper.jpg"), "Dodge", "Viper", "USA"),
-            Car(listOf("mini_cooper.jpg"), "Mini", "Cooper", "USA"),
-            Car(listOf("nissan_gtr.jpg"), "Nissan", "GTR", "Japan"),
-            Car(listOf("saleen_s7.jpg"), "Saleen", "S7", "USA"),
-            Car(listOf("toyota_supra.jpg"), "Toyota", "Supra", "Japan")
+            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
+            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),
+            Car(listOf("nissan_gtr_1.jpg"), "Nissan", "GTR", "Japan"),
+            Car(listOf("saleen_s7_1.jpg"), "Saleen", "S7", "USA"),
+            Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
         )
         val application = requireNotNull(this).application
         database = CarDatabase.getInstance(application).carDao
         uiScope.launch {
-//            insertAll(cars)
+            insertAll(cars)
         }
     }
 
