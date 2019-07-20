@@ -9,8 +9,6 @@ object ModelLevel : Level() {
     override val name: String
         get() = "Models"
 
-    override fun createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> =
-        super.createAnswerListFromLambda(car, cars) {
-            it?.model
-        }
+    override fun getAnswerType(car: Car?): String? = car?.model
+
 }

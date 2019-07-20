@@ -9,8 +9,6 @@ object BrandLevel : Level() {
     override val name: String
         get() = "Brands"
 
-    override fun createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> =
-        super.createAnswerListFromLambda(car, cars) {
-            it?.brand
-        }
+    override fun getAnswerType(car: Car?): String? =  car?.brand
+
 }

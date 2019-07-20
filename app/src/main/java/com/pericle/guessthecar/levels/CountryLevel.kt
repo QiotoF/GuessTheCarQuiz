@@ -9,8 +9,6 @@ object CountryLevel : Level(){
     override val name: String
         get() = "Countries"
 
-    override fun createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> =
-        super.createAnswerListFromLambda(car, cars){
-            it?.country
-        }
+    override fun getAnswerType(car: Car?): String? = car?.country
+
 }
