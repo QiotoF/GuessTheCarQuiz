@@ -22,8 +22,10 @@ class QuizViewModel(
 
     private var cars = listOf<Car>()
     private lateinit var carIterator: ListIterator<Car>
-
     val currentCar = MutableLiveData<Car>()
+    private val _currentCarIndex = MutableLiveData<Int>()
+    val currentCarIndex: LiveData<Int>
+        get() = _currentCarIndex
 
     private lateinit var answers: MutableList<String?>
     private val _firstAnswer = MutableLiveData<String>()
@@ -52,6 +54,7 @@ class QuizViewModel(
         uiScope.launch {
             cars = getCarsFromDatabase()
             carIterator = cars.listIterator()
+            _currentCarIndex.value = 0
             onNextClick()
         }
     }
@@ -63,11 +66,12 @@ class QuizViewModel(
     }
 
     fun onNextClick() {
-        answerClicked = false
         if (carIterator.hasNext()) {
+            answerClicked = false
             setCar()
             setAnswers()
             _nextBtnActive.value = false
+            _currentCarIndex.value = _currentCarIndex.value?.inc()
         }
     }
 
