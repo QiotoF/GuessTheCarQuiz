@@ -45,84 +45,86 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:enabled="@{viewModel.nextBtnActive}"
+            android:background="@drawable/rectangle_white_normal"
             android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:enabled="@{viewModel.nextBtnActive}"
             android:onClick="@{() -> viewModel.onNextClick()}"
             android:text="Next"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <Button
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:isCorrect="@{viewModel.isFourthCorrect}"
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.fourthAnswer}"
+            app:isCorrect="@{viewModel.isFourthCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:focusable="true" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:isCorrect="@{viewModel.isThirdCorrect}"
             android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.thirdAnswer}"
+            app:isCorrect="@{viewModel.isThirdCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:focusable="true" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:isCorrect="@{viewModel.isSecondCorrect}"
             android:id="@+id/button4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.secAnswer}"
+            app:isCorrect="@{viewModel.isSecondCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/button3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:focusable="true" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:clickable="true"
-            android:foreground="?attr/selectableItemBackground"
-            app:isCorrect="@{viewModel.isFirstCorrect}"
+            android:background="@drawable/rectangle_white_normal"
             android:id="@+id/button5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.firstAnswer}"
+            app:isCorrect="@{viewModel.isFirstCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:focusable="true" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

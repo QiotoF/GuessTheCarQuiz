@@ -38,6 +38,8 @@ class QuizViewModel(
     val isThirdCorrect = MutableLiveData<Answer>()
     val isFourthCorrect = MutableLiveData<Answer>()
 
+    private var answerClicked: Boolean = false
+
     private val _nextBtnActive = MutableLiveData<Boolean>()
     val nextBtnActive: LiveData<Boolean>
         get() = _nextBtnActive
@@ -61,6 +63,7 @@ class QuizViewModel(
     }
 
     fun onNextClick() {
+        answerClicked = false
         if (carIterator.hasNext()) {
             setCar()
             setAnswers()
@@ -85,9 +88,12 @@ class QuizViewModel(
     }
 
     fun onAnswerClick(view: View) {
-        val btn = view as Button
-        checkAnswer(btn)
-        _nextBtnActive.value = true
+        if (!answerClicked) {
+            val btn = view as Button
+            checkAnswer(btn)
+            _nextBtnActive.value = true
+        }
+        answerClicked = true
     }
 
     private fun checkAnswer(btn: Button) {
