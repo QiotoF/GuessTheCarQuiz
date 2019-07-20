@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.CarDatabase
@@ -30,6 +31,10 @@ class QuizFragment : Fragment() {
         val viewModelFactory = QuizViewModelFactory(arguments.level, dataSource, application)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel::class.java)
         binding.viewModel = viewModel
+
+        viewModel.nextBtnActive.observe(this, Observer {
+            binding.btnNext.isEnabled = it ?: true
+        })
 
         return binding.root
     }

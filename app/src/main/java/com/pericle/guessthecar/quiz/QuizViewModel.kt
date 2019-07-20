@@ -4,6 +4,7 @@ import android.app.Application
 import android.view.View
 import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.pericle.guessthecar.database.Car
 import com.pericle.guessthecar.database.CarDao
@@ -25,7 +26,9 @@ class QuizViewModel(
     val currentCar = MutableLiveData<Car>()
 
     private lateinit var answers: MutableList<String?>
-    val firstAnswer = MutableLiveData<String>()
+    private val _firstAnswer = MutableLiveData<String>()
+    val firstAnswer: LiveData<String>
+        get() = _firstAnswer
     val secAnswer = MutableLiveData<String>()
     val thirdAnswer = MutableLiveData<String>()
     val fourthAnswer = MutableLiveData<String>()
@@ -34,6 +37,10 @@ class QuizViewModel(
     val isSecondCorrect = MutableLiveData<Answer>()
     val isThirdCorrect = MutableLiveData<Answer>()
     val isFourthCorrect = MutableLiveData<Answer>()
+
+    private val _nextBtnActive = MutableLiveData<Boolean>()
+    val nextBtnActive: LiveData<Boolean>
+        get() = _nextBtnActive
 
     init {
         initialiseCars()
@@ -57,6 +64,7 @@ class QuizViewModel(
         if (carIterator.hasNext()) {
             setCar()
             setAnswers()
+            _nextBtnActive.value = false
         }
     }
 
@@ -66,7 +74,7 @@ class QuizViewModel(
 
     private fun setAnswers() {
         answers = level.createAnswerList(currentCar.value, cars)
-        firstAnswer.value = answers[0]
+        this._firstAnswer.value = answers[0]
         secAnswer.value = answers[1]
         thirdAnswer.value = answers[2]
         fourthAnswer.value = answers[3]
@@ -79,16 +87,15 @@ class QuizViewModel(
     fun onAnswerClick(view: View) {
         val btn = view as Button
         checkAnswer(btn)
+        _nextBtnActive.value = true
     }
 
     private fun checkAnswer(btn: Button) {
         if (level.checkAnswer(currentCar.value, btn.text.toString())) {
-//            Toast.makeText(app, "True", Toast.LENGTH_SHORT).show()
             btn.setIsCorrect(Answer.TRUE)
         } else {
-//            Toast.makeText(app, "False", Toast.LENGTH_SHORT).show()
             when (level.getAnswerType(currentCar.value)) {
-                firstAnswer.value -> isFirstCorrect.value = Answer.TRUE
+                this._firstAnswer.value -> isFirstCorrect.value = Answer.TRUE
                 secAnswer.value -> isSecondCorrect.value = Answer.TRUE
                 thirdAnswer.value -> isThirdCorrect.value = Answer.TRUE
                 fourthAnswer.value -> isFourthCorrect.value = Answer.TRUE

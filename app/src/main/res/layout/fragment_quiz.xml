@@ -45,7 +45,8 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/button"
+            android:enabled="@{viewModel.nextBtnActive}"
+            android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -67,7 +68,7 @@
             android:layout_marginBottom="8dp"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.fourthAnswer}"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:focusable="true" />
