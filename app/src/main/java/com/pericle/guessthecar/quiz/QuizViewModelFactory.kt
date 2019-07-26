@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.pericle.guessthecar.database.CarDao
-import com.pericle.guessthecar.levels.Level
+import com.pericle.guessthecar.database.Level
 
 class QuizViewModelFactory(
     private val level: Level,

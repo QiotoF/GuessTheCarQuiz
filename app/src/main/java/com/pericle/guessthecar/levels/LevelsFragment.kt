@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.pericle.guessthecar.R
+import com.pericle.guessthecar.database.CarDatabase
 import com.pericle.guessthecar.databinding.FragmentLevelsBinding
 
 class LevelsFragment : Fragment() {
@@ -24,13 +25,21 @@ class LevelsFragment : Fragment() {
         )
         binding.lifecycleOwner = this
 
-        val viewModel = ViewModelProviders.of(this).get(LevelsViewModel::class.java)
+        val application = requireNotNull(this.activity).application
+        val dataSource = CarDatabase.getInstance(application).levelDao
+        val viewModelFactory = LevelsViewModelFactory(dataSource)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LevelsViewModel::class.java)
 
         val adapter = LevelsAdapter(LevelListener { level ->
             viewModel.onLevelClicked(level)
         })
         binding.levelsList.adapter = adapter
-        adapter.data = viewModel.data
+
+        viewModel.data.observe(this, Observer {
+            it?.let {
+                adapter.data = it
+            }
+        })
 
         viewModel.navigateToQuiz.observe(this, Observer { level ->
             level?.let {

@@ -9,9 +9,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.pericle.guessthecar.database.Car
-import com.pericle.guessthecar.database.CarDao
-import com.pericle.guessthecar.database.CarDatabase
+import com.pericle.guessthecar.database.*
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 
@@ -22,7 +20,8 @@ class MainActivity : AppCompatActivity() {
 
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
-    private lateinit var database: CarDao
+    private lateinit var levelDao: LevelDao
+    private lateinit var carDao: CarDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +48,8 @@ class MainActivity : AppCompatActivity() {
             Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
         )
         val application = requireNotNull(this).application
-        database = CarDatabase.getInstance(application).carDao
+        levelDao = CarDatabase.getInstance(application).levelDao
+        carDao = CarDatabase.getInstance(application).carDao
         uiScope.launch {
             insertAll(cars)
         }
@@ -57,8 +57,12 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun insertAll(cars: List<Car>) {
         withContext(Dispatchers.IO) {
+
+            levelDao.insert(Level("Brands", QuestionType.BRAND))
+            levelDao.insert(Level("Models", QuestionType.MODEL))
+
             for (car in cars) {
-                database.insert(car)
+                carDao.insert(car)
             }
         }
     }

@@ -6,9 +6,7 @@ import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.pericle.guessthecar.database.Car
-import com.pericle.guessthecar.database.CarDao
-import com.pericle.guessthecar.levels.Level
+import com.pericle.guessthecar.database.*
 import kotlinx.coroutines.*
 
 class QuizViewModel(
@@ -104,7 +102,7 @@ class QuizViewModel(
         if (level.checkAnswer(currentCar.value, btn.text.toString())) {
             btn.setIsCorrect(Answer.TRUE)
         } else {
-            when (level.getAnswerType(currentCar.value)) {
+            when (level.answerType(currentCar.value)) {
                 this._firstAnswer.value -> isFirstCorrect.value = Answer.TRUE
                 secAnswer.value -> isSecondCorrect.value = Answer.TRUE
                 thirdAnswer.value -> isThirdCorrect.value = Answer.TRUE

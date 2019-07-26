@@ -7,7 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Car::class], version = 1, exportSchema = false)
+@Database(entities = [Car::class, Level::class], version = 2, exportSchema = false)
 @TypeConverters(CarConverters::class)
 abstract class CarDatabase : RoomDatabase() {
 
@@ -15,6 +15,7 @@ abstract class CarDatabase : RoomDatabase() {
      * Connects the database to the DAO.
      */
     abstract val carDao: CarDao
+    abstract val levelDao: LevelDao
 
     /**
      * Define a companion object, this allows us to add functions on the SleepDatabase class.

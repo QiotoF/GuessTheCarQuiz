@@ -8,7 +8,7 @@
 
         <variable
             name="level"
-            type="com.pericle.guessthecar.levels.Level" />
+            type="com.pericle.guessthecar.database.Level" />
 
         <variable
             name="clickListener"

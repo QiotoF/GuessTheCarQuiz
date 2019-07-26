@@ -3,12 +3,14 @@ package com.pericle.guessthecar.levels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.pericle.guessthecar.database.Level
+import com.pericle.guessthecar.database.LevelDao
 
-class LevelsViewModel : ViewModel() {
+class LevelsViewModel(
+    val database: LevelDao
+) : ViewModel() {
 
-    val data = listOf(
-        BrandLevel, ModelLevel, CountryLevel
-    )
+    val data = database.getAllLevels()
 
     private val _navigateToQuiz = MutableLiveData<Level>()
     val navigateToQuiz: LiveData<Level>

@@ -22,6 +22,6 @@
         tools:layout="@layout/fragment_quiz" >
         <argument
             android:name="level"
-            app:argType="com.pericle.guessthecar.levels.Level" />
+            app:argType="com.pericle.guessthecar.database.Level" />
     </fragment>
 </navigation>
