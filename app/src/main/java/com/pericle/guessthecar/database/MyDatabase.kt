@@ -1,15 +1,14 @@
 package com.pericle.guessthecar.database
 
 import android.content.Context
-import androidx.databinding.adapters.Converters
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 @Database(entities = [Car::class, Level::class], version = 2, exportSchema = false)
-@TypeConverters(CarConverters::class)
-abstract class CarDatabase : RoomDatabase() {
+@TypeConverters(MyConverters::class)
+abstract class MyDatabase : RoomDatabase() {
 
     /**
      * Connects the database to the DAO.
@@ -34,7 +33,7 @@ abstract class CarDatabase : RoomDatabase() {
          *  thread to shared data are visible to other threads.
          */
         @Volatile
-        private var INSTANCE: CarDatabase? = null
+        private var INSTANCE: MyDatabase? = null
 
         /**
          * Helper function to get the database.
@@ -53,7 +52,7 @@ abstract class CarDatabase : RoomDatabase() {
          *
          * @param context The application context Singleton, used to get access to the filesystem.
          */
-        fun getInstance(context: Context): CarDatabase {
+        fun getInstance(context: Context): MyDatabase {
             // Multiple threads can ask for the database at the same time, ensure we only initialize
             // it once by using synchronized. Only one thread may enter a synchronized block at a
             // time.
@@ -65,7 +64,7 @@ abstract class CarDatabase : RoomDatabase() {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        CarDatabase::class.java,
+                        MyDatabase::class.java,
                         "car_database"
                     )
                         // Wipes and rebuilds instead of migrating if no Migration object.

@@ -8,7 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.database.CarDatabase
+import com.pericle.guessthecar.database.MyDatabase
 import com.pericle.guessthecar.databinding.FragmentLevelsBinding
 
 class LevelsFragment : Fragment() {
@@ -26,7 +26,7 @@ class LevelsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         val application = requireNotNull(this.activity).application
-        val dataSource = CarDatabase.getInstance(application).levelDao
+        val dataSource = MyDatabase.getInstance(application).levelDao
         val viewModelFactory = LevelsViewModelFactory(dataSource)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LevelsViewModel::class.java)
 

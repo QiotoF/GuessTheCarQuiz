@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity() {
             Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
         )
         val application = requireNotNull(this).application
-        levelDao = CarDatabase.getInstance(application).levelDao
-        carDao = CarDatabase.getInstance(application).carDao
+        levelDao = MyDatabase.getInstance(application).levelDao
+        carDao = MyDatabase.getInstance(application).carDao
         uiScope.launch {
             insertAll(cars)
         }

@@ -23,7 +23,7 @@ fun Level.answerType(it: Car?): String? = when (questionType) {
         it?.brand
     }
     QuestionType.MODEL -> {
-        it?.model
+        it?.run { it.brand + " " + it.model }
     }
     QuestionType.COUNTRY -> {
         it?.country

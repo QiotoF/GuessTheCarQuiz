@@ -2,7 +2,7 @@ package com.pericle.guessthecar.database
 
 import androidx.room.TypeConverter
 
-class CarConverters {
+class MyConverters {
 
     @TypeConverter
     fun fromList(list: List<String>): String = list.joinToString()

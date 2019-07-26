@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.database.CarDatabase
+import com.pericle.guessthecar.database.MyDatabase
 import com.pericle.guessthecar.databinding.FragmentQuizBinding
 
 class QuizFragment : Fragment() {
@@ -28,7 +28,7 @@ class QuizFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val arguments = QuizFragmentArgs.fromBundle(arguments!!)
-        val dataSource = CarDatabase.getInstance(application).carDao
+        val dataSource = MyDatabase.getInstance(application).carDao
         val viewModelFactory = QuizViewModelFactory(arguments.level, dataSource, application)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel::class.java)
         binding.viewModel = viewModel
