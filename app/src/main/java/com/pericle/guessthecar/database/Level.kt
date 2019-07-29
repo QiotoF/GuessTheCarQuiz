@@ -1,22 +1,26 @@
 package com.pericle.guessthecar.database
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
 enum class QuestionType {
     BRAND, MODEL, COUNTRY
 }
 
-//@Parcelize
+@Parcelize
 @Entity(tableName = "level_table")
 data class Level(
+
     @PrimaryKey
-    var name: String = "fuck",
-//    @Ignore
-    var questionType: QuestionType
-//    var answerType: (Car?) -> String? = {it?.brand}
-) : Serializable
+    val name: String,
+
+    val questionType: QuestionType,
+
+    var highScore: Int = 0
+
+) : Parcelable
 
 fun Level.answerType(it: Car?): String? = when (questionType) {
     QuestionType.BRAND -> {

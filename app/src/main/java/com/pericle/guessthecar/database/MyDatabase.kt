@@ -6,12 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Car::class, Level::class], version = 2, exportSchema = false)
+@Database(entities = [Car::class, Level::class], version = 3, exportSchema = false)
 @TypeConverters(MyConverters::class)
 abstract class MyDatabase : RoomDatabase() {
 
     /**
-     * Connects the database to the DAO.
+     * Connects the carDao to the DAO.
      */
     abstract val carDao: CarDao
     abstract val levelDao: LevelDao
@@ -24,9 +24,9 @@ abstract class MyDatabase : RoomDatabase() {
      */
     companion object {
         /**
-         * INSTANCE will keep a reference to any database returned via getInstance.
+         * INSTANCE will keep a reference to any carDao returned via getInstance.
          *
-         * This will help us avoid repeatedly initializing the database, which is expensive.
+         * This will help us avoid repeatedly initializing the carDao, which is expensive.
          *
          *  The value of a volatile variable will never be cached, and all writes and
          *  reads will be done to and from the main memory. It means that changes made by one
@@ -36,12 +36,12 @@ abstract class MyDatabase : RoomDatabase() {
         private var INSTANCE: MyDatabase? = null
 
         /**
-         * Helper function to get the database.
+         * Helper function to get the carDao.
          *
-         * If a database has already been retrieved, the previous database will be returned.
-         * Otherwise, create a new database.
+         * If a carDao has already been retrieved, the previous carDao will be returned.
+         * Otherwise, create a new carDao.
          *
-         * This function is threadsafe, and callers should cache the result for multiple database
+         * This function is threadsafe, and callers should cache the result for multiple carDao
          * calls to avoid overhead.
          *
          * This is an example of a simple Singleton pattern that takes another Singleton as an
@@ -53,14 +53,14 @@ abstract class MyDatabase : RoomDatabase() {
          * @param context The application context Singleton, used to get access to the filesystem.
          */
         fun getInstance(context: Context): MyDatabase {
-            // Multiple threads can ask for the database at the same time, ensure we only initialize
+            // Multiple threads can ask for the carDao at the same time, ensure we only initialize
             // it once by using synchronized. Only one thread may enter a synchronized block at a
             // time.
             synchronized(this) {
                 // Copy the current value of INSTANCE to a local variable so Kotlin can smart cast.
                 // Smart cast is only available to local variables.
                 var instance = INSTANCE
-                // If instance is `null` make a new database instance.
+                // If instance is `null` make a new carDao instance.
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
@@ -73,7 +73,7 @@ abstract class MyDatabase : RoomDatabase() {
                         // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
                         .fallbackToDestructiveMigration()
                         .build()
-                    // Assign INSTANCE to the newly created database.
+                    // Assign INSTANCE to the newly created carDao.
                     INSTANCE = instance
                 }
                 // Return instance; smart cast to be non-null.

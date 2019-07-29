@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "462298213835",
+    "firebase_url": "https://guess-the-car-quiz.firebaseio.com",
+    "project_id": "guess-the-car-quiz",
+    "storage_bucket": "guess-the-car-quiz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462298213835:android:93544e9feb7b8ef7",
+        "android_client_info": {
+          "package_name": "com.pericle.guessthecar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462298213835-49ihp4f1dkvba067b7l4bag8gnkkb1fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2XzR0kixsg6vGZOJnJcCdaPHq3z-Siik"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462298213835-49ihp4f1dkvba067b7l4bag8gnkkb1fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

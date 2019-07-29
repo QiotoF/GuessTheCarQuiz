@@ -11,7 +11,8 @@ import kotlinx.coroutines.*
 
 class QuizViewModel(
     val level: Level,
-    val database: CarDao,
+    val carDao: CarDao,
+    val levelDao: LevelDao,
     val app: Application
 ) : AndroidViewModel(app) {
 
@@ -21,9 +22,9 @@ class QuizViewModel(
     private var cars = listOf<Car>()
     private lateinit var carIterator: ListIterator<Car>
     val currentCar = MutableLiveData<Car>()
-    private val _currentCarIndex = MutableLiveData<Int>()
-    val currentCarIndex: LiveData<Int>
-        get() = _currentCarIndex
+    private val _score = MutableLiveData<Int>()
+    val score: LiveData<Int>
+        get() = _score
 
     private lateinit var answers: MutableList<String?>
     private val _firstAnswer = MutableLiveData<String>()
@@ -52,14 +53,14 @@ class QuizViewModel(
         uiScope.launch {
             cars = getCarsFromDatabase()
             carIterator = cars.listIterator()
-            _currentCarIndex.value = 0
+            _score.value = 0
             onNextClick()
         }
     }
 
     private suspend fun getCarsFromDatabase(): List<Car> {
         return withContext(Dispatchers.IO) {
-            database.getAllCars().shuffled()
+            carDao.getAllCars().shuffled()
         }
     }
 
@@ -69,9 +70,23 @@ class QuizViewModel(
             setCar()
             setAnswers()
             _nextBtnActive.value = false
-            _currentCarIndex.value = _currentCarIndex.value?.inc()
+            _score.value = _score.value?.inc()
+        } else {
+            if (score.value!! > level.highScore) {
+                uiScope.launch {
+                    updateLevel()
+                }
+            }
         }
     }
+
+    private suspend fun updateLevel() {
+        level.highScore = _score.value!!
+        withContext(Dispatchers.IO) {
+            levelDao.insert(level)
+        }
+    }
+
 
     private fun setCar() {
         currentCar.value = carIterator.next()
