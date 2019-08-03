@@ -3,17 +3,19 @@ package com.pericle.guessthecar.quiz
 import android.app.Application
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
-import android.os.Environment
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.*
+import com.squareup.okhttp.Callback
+import com.squareup.okhttp.OkHttpClient
+import com.squareup.okhttp.Request
+import com.squareup.okhttp.Response
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
 import kotlinx.coroutines.*
@@ -135,12 +137,38 @@ class QuizViewModel(
 //        }
 //    }
 
-    fun imageDownload(url: String) {
-        val target = getTarget(url)
-        Picasso.get()
-            .load(url)
-            .placeholder(R.drawable.loading_animation)
-            .into(target)
+    private fun imageDownload(url: String) {
+//        val target = getTarget(url)
+//        Picasso.get()
+//            .load(url)
+//            .placeholder(R.drawable.loading_animation)
+//            .into(target)
+        val client = OkHttpClient()
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        client.newCall(request).enqueue(object : Callback {
+            override fun onFailure(request: Request, e: IOException) {
+                println("request failed: " + e.message)
+            }
+
+            @Throws(IOException::class)
+            override fun onResponse(response: Response) {
+                val bitmap = BitmapFactory.decodeStream(response.body().byteStream())
+                val file = File(app.getDir("car_images", Context.MODE_PRIVATE), "fuck")
+                try {
+                    file.createNewFile()
+                    val ostream = FileOutputStream(file)
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
+                    ostream.flush()
+                    ostream.close()
+                } catch (e: IOException) {
+                    Timber.e(e.localizedMessage)
+                }
+            }
+        })
     }
 
     //target to save
@@ -151,7 +179,7 @@ class QuizViewModel(
 
             override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
                 Thread(Runnable {
-//                    val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck")
+                    //                    val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck")
 
                     val file = File(app.getDir("car_images", Context.MODE_PRIVATE), "fuck")
                     try {
@@ -217,7 +245,7 @@ class QuizViewModel(
 //            }
 
         db.collection("cars")
-            .addSnapshotListener{value, e->
+            .addSnapshotListener { value, e ->
                 if (e != null) {
                     return@addSnapshotListener
                 }

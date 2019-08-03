@@ -69,6 +69,8 @@ dependencies {
 
     // Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
+
+    implementation("com.squareup.okhttp3:okhttp:4.0.1")
 }
 
 apply plugin: 'com.google.gms.google-services'
