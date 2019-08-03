@@ -43,7 +43,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
         NavigationUI.setupWithNavController(binding.navView, navController)
-
         val cars = listOf<Car>(
 //            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
 //            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),

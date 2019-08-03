@@ -1,18 +1,16 @@
 package com.pericle.guessthecar.quiz
 
 import android.app.Application
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import androidx.annotation.NonNull
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.*
@@ -23,8 +21,6 @@ import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
-import java.security.AccessController.getContext
 
 
 class QuizViewModel(
@@ -155,7 +151,9 @@ class QuizViewModel(
 
             override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
                 Thread(Runnable {
-                    val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck.jpg")
+//                    val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck")
+
+                    val file = File(app.getDir("car_images", Context.MODE_PRIVATE), "fuck")
                     try {
                         file.createNewFile()
                         val ostream = FileOutputStream(file)
@@ -175,31 +173,66 @@ class QuizViewModel(
         }
     }
 
-    fun fuck() {
+    private fun setDummyCars() {
+        cars = listOf(
+            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "gsda", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "vds", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "ewfr", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "asd", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "fsd", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "das", country = "fuck", images = listOf("fuck"), model = "fuck"),
+            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck")
 
+        )
+
+        carIterator = cars.listIterator()
+        _score.value = 0
+        onNextClick()
     }
 
 
     private fun initialiseCars() {
-        db.collection("cars").get()
-            .addOnSuccessListener {
-                Timber.i("Success fetching cars!")
-                if (it != null) {
-                    cars = it.toObjects(Car::class.java)
-                    uiScope.launch {
-                        for (car in cars) {
-                            imageDownload(car.images[0])
-                        }
-                        carIterator = cars.listIterator()
-                        _score.value = 0
-                        onNextClick()
+//        db.collection("cars").get()
+//            .addOnSuccessListener {
+//                Timber.i("Success fetching cars!")
+//                if (it != null) {
+//                    cars = it.toObjects(Car::class.java)
+//                    uiScope.launch {
+//                        for (car in cars) {
+//                            imageDownload(car.images[0])
+//                        }
+//                        carIterator = cars.listIterator()
+//                        _score.value = 0
+//                        onNextClick()
+//                    }
+//                }
+//            }
+//            .addOnFailureListener {
+//                Timber.i(it.message, "Fetching cars failed: %s")
+//            }
+
+        db.collection("cars")
+            .addSnapshotListener{value, e->
+                if (e != null) {
+                    return@addSnapshotListener
+                }
+                cars = value!!.toObjects(Car::class.java)
+                uiScope.launch {
+                    for (car in cars) {
+                        imageDownload(car.images[0])
                     }
+                    carIterator = cars.listIterator()
+                    _score.value = 0
+                    onNextClick()
                 }
             }
-            .addOnFailureListener {
-                Timber.i(it.message, "Fetching cars failed: %s")
-            }
 
+//        setDummyCars()
 
 //        uiScope.launch {
 //            cars = getCarsFromDatabase()
