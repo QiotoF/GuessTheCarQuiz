@@ -1,13 +1,31 @@
 package com.pericle.guessthecar.quiz
 
 import android.app.Application
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.Button
+import androidx.annotation.NonNull
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.google.firebase.firestore.FirebaseFirestore
+import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.*
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import kotlinx.coroutines.*
+import timber.log.Timber
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.lang.Exception
+import java.security.AccessController.getContext
+
 
 class QuizViewModel(
     val level: Level,
@@ -15,6 +33,8 @@ class QuizViewModel(
     val levelDao: LevelDao,
     val app: Application
 ) : AndroidViewModel(app) {
+
+    private val db = FirebaseFirestore.getInstance()
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -49,20 +69,151 @@ class QuizViewModel(
         initialiseCars()
     }
 
-    private fun initialiseCars() {
-        uiScope.launch {
-            cars = getCarsFromDatabase()
-            carIterator = cars.listIterator()
-            _score.value = 0
-            onNextClick()
+
+//
+//    fun imageDownload(urls: List<String>) {
+//        for (url in urls) {
+//            Picasso.get()
+//                .load(url)
+//                .placeholder(R.drawable.loading_animation)
+//                .into(getTarget(url))
+//        }
+//    }
+//
+//
+//    private fun getTarget(url: String): Target {
+//        return object : Target {
+//
+//            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+//                Thread(Runnable {
+//                    val file = File(Environment.getExternalStorageDirectory().path + "/" + url)
+//                    try {
+//                        file.createNewFile()
+//                        val ostream = FileOutputStream(file)
+//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
+//                        ostream.flush()
+//                        ostream.close()
+//                    } catch (e: IOException) {
+//                        Timber.e(e.localizedMessage)
+//                    }
+//                }).start()
+//
+//            }
+//
+//            override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
+//
+//            }
+//
+//            override fun onPrepareLoad(placeHolderDrawable: Drawable) {
+//
+//            }
+//        }
+//
+//    }
+
+//    private suspend fun imageDownload(urls: List<String>) {
+//        withContext(Dispatchers.IO) {
+//            for (urlString in urls) {
+//                val url = URL(urlString)
+//                val input = url.openStream()
+//                try {
+//                    //The sdcard directory e.g. '/sdcard' can be used directly, or
+//                    //more safely abstracted with getExternalStorageDirectory()
+//                    val storagePath = Environment.getExternalStorageDirectory().absolutePath
+//                    val output = FileOutputStream("$storagePath/$urlString")
+//                    try {
+//                        val buffer = ByteArray(1024)
+//                        var bytesRead = 0
+//                        bytesRead = (input.read(buffer, 0, buffer.size))
+//                        while (bytesRead >= 0) {
+//                            output.write(buffer, 0, bytesRead)
+//                            bytesRead = (input.read(buffer, 0, buffer.size))
+//                        }
+//                    } finally {
+//                        output.close()
+//                    }
+//                } finally {
+//                    input.close()
+//                }
+//            }
+//        }
+//    }
+
+    fun imageDownload(url: String) {
+        val target = getTarget(url)
+        Picasso.get()
+            .load(url)
+            .placeholder(R.drawable.loading_animation)
+            .into(target)
+    }
+
+    //target to save
+    private fun getTarget(url: String): Target {
+        return object : Target {
+            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+            }
+
+            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
+                Thread(Runnable {
+                    val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck.jpg")
+                    try {
+                        file.createNewFile()
+                        val ostream = FileOutputStream(file)
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
+                        ostream.flush()
+                        ostream.close()
+                    } catch (e: IOException) {
+                        Timber.e(e.getLocalizedMessage())
+                    }
+                }).start()
+
+            }
+
+            override fun onPrepareLoad(placeHolderDrawable: Drawable) {
+
+            }
         }
     }
 
-    private suspend fun getCarsFromDatabase(): List<Car> {
-        return withContext(Dispatchers.IO) {
-            carDao.getAllCars().shuffled()
-        }
+    fun fuck() {
+
     }
+
+
+    private fun initialiseCars() {
+        db.collection("cars").get()
+            .addOnSuccessListener {
+                Timber.i("Success fetching cars!")
+                if (it != null) {
+                    cars = it.toObjects(Car::class.java)
+                    uiScope.launch {
+                        for (car in cars) {
+                            imageDownload(car.images[0])
+                        }
+                        carIterator = cars.listIterator()
+                        _score.value = 0
+                        onNextClick()
+                    }
+                }
+            }
+            .addOnFailureListener {
+                Timber.i(it.message, "Fetching cars failed: %s")
+            }
+
+
+//        uiScope.launch {
+//            cars = getCarsFromDatabase()
+//            carIterator = cars.listIterator()
+//            _score.value = 0
+//            onNextClick()
+//        }
+    }
+
+//    private suspend fun getCarsFromDatabase(): List<Car> {
+//        return withContext(Dispatchers.IO) {
+//            carDao.getAllCars().shuffled()
+//        }
+//    }
 
     fun onNextClick() {
         if (carIterator.hasNext()) {

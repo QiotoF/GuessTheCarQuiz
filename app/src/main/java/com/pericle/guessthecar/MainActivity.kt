@@ -1,7 +1,11 @@
 package com.pericle.guessthecar
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -40,18 +44,43 @@ class MainActivity : AppCompatActivity() {
         }
         NavigationUI.setupWithNavController(binding.navView, navController)
 
-        val cars = listOf(
-            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
-            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),
-            Car(listOf("nissan_gtr_1.jpg"), "Nissan", "GTR", "Japan"),
-            Car(listOf("saleen_s7_1.jpg"), "Saleen", "S7", "USA"),
-            Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
+        val cars = listOf<Car>(
+//            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
+//            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),
+//            Car(listOf("nissan_gtr_1.jpg"), "Nissan", "GTR", "Japan"),
+//            Car(listOf("saleen_s7_1.jpg"), "Saleen", "S7", "USA"),
+//            Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
         )
         val application = requireNotNull(this).application
         levelDao = MyDatabase.getInstance(application).levelDao
         carDao = MyDatabase.getInstance(application).carDao
         uiScope.launch {
             insertAll(cars)
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
+            )
+
+        }
+        if (ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 2
+            )
+
         }
     }
 
