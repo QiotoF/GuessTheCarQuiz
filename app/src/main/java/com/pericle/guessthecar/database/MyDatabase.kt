@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Car::class, Level::class], version = 4, exportSchema = false)
+@Database(entities = [Car::class, Level::class], version = 1, exportSchema = false)
 @TypeConverters(MyConverters::class)
 abstract class MyDatabase : RoomDatabase() {
 

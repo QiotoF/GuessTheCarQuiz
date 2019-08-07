@@ -159,6 +159,7 @@ class QuizViewModel(
                 val bitmap = BitmapFactory.decodeStream(response.body().byteStream())
                 val file = File(app.getDir("car_images", Context.MODE_PRIVATE), "fuck")
                 try {
+                    //TODO: delete try-catch block
                     file.createNewFile()
                     val ostream = FileOutputStream(file)
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
@@ -251,9 +252,9 @@ class QuizViewModel(
                 }
                 cars = value!!.toObjects(Car::class.java)
                 uiScope.launch {
-                    for (car in cars) {
-                        imageDownload(car.images[0])
-                    }
+//                    for (car in cars) {
+//                        imageDownload(car.images[0])
+//                    }
                     carIterator = cars.listIterator()
                     _score.value = 0
                     onNextClick()
@@ -270,11 +271,11 @@ class QuizViewModel(
 //        }
     }
 
-//    private suspend fun getCarsFromDatabase(): List<Car> {
-//        return withContext(Dispatchers.IO) {
-//            carDao.getAllCars().shuffled()
-//        }
-//    }
+    private suspend fun getCarsFromDatabase(): List<Car> {
+        return withContext(Dispatchers.IO) {
+            carDao.getAllCars().shuffled()
+        }
+    }
 
     fun onNextClick() {
         if (carIterator.hasNext()) {

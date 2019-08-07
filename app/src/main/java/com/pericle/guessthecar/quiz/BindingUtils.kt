@@ -6,6 +6,8 @@ import android.os.Environment
 import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.Car
 import java.io.File
@@ -51,7 +53,7 @@ fun ImageView.setCarImage(car: Car?) {
 //                .placeholder(R.drawable.loading_animation)
 //                .error(R.drawable.ic_broken_image))
 //            .into(this)
-        val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck")
+        val file = File(Environment.getExternalStorageDirectory().path + "/" + imgUri)
 //        Picasso.get()
 //            .load(file)
 //            .placeholder(R.drawable.loading_animation)
@@ -61,16 +63,16 @@ fun ImageView.setCarImage(car: Car?) {
 
 //        val path = Environment.getExternalStorageDirectory().path + "/" + "fuck"
 //        val path = this.context.applicationContext.filesDir.absolutePath + "/" + "car_images" + "/" + "fuck"
-        val path =
-            this.context.applicationContext.getDir("car_images", Context.MODE_PRIVATE).absolutePath + "/" + "fuck"
-        this.setImageURI(Uri.parse(path))
+//        val path =
+//            this.context.applicationContext.getDir("car_images", Context.MODE_PRIVATE).absolutePath + "/" + imgUri
+//        this.setImageURI(Uri.parse(path))
 
-//        Glide.with(this.context.applicationContext)
-//            .load(path)
-//            .apply(
-//                RequestOptions()
-//                .placeholder(R.drawable.loading_animation)
-//                .error(R.drawable.ic_broken_image))
-//            .into(this)
+        Glide.with(this.context.applicationContext)
+            .load(imgUri)
+            .apply(
+                RequestOptions()
+                .placeholder(R.drawable.loading_animation)
+                .error(R.drawable.ic_broken_image))
+            .into(this)
     }
 }

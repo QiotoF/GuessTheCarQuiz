@@ -13,9 +13,11 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.google.firebase.firestore.FirebaseFirestore
 import com.pericle.guessthecar.database.*
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -56,6 +58,9 @@ class MainActivity : AppCompatActivity() {
         uiScope.launch {
             insertAll(cars)
         }
+
+//        val db = FirebaseFirestore.getInstance()
+//        db.collection("cars").get()
 
         if (ContextCompat.checkSelfPermission(
                 this,
