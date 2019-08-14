@@ -1,23 +1,17 @@
 package com.pericle.guessthecar.quiz
 
-import android.content.Context
-import android.net.Uri
-import android.os.Environment
 import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import coil.api.load
+import coil.transform.BlurTransformation
+import coil.transform.CircleCropTransformation
+import coil.transform.GrayscaleTransformation
+import coil.transform.RoundedCornersTransformation
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.Car
-import java.io.File
-
-//@BindingAdapter("carImage")
-//fun ImageView.setCarImage(car: Car?) {
-//    car?.let {
-//        this.setImageDrawable(Drawable.createFromStream(this.context.assets.open(it.images.random()), null))
-//    }
-//}
 
 @BindingAdapter("isCorrect")
 fun Button.setIsCorrect(answer: Answer?) {
@@ -31,48 +25,17 @@ fun Button.setIsCorrect(answer: Answer?) {
     )
 }
 
-
-fun adapt(url: String): String {
-    val path = Environment.getExternalStorageDirectory().path + "/" + "fuck.jpg"
-    val file = File(path)
-    return if (file.exists()) {
-        path
-    } else {
-        url
-    }
-}
-
 @BindingAdapter("carImage")
 fun ImageView.setCarImage(car: Car?) {
-    car?.let {
+    car?.let{
         val imgUri = car.images.random()/*.toUri().buildUpon().scheme("https").build()*/
-//        Glide.with(context)
-//            .load(imgUri)
-//            .apply(
-//                RequestOptions()
-//                .placeholder(R.drawable.loading_animation)
-//                .error(R.drawable.ic_broken_image))
-//            .into(this)
-        val file = File(Environment.getExternalStorageDirectory().path + "/" + imgUri)
-//        Picasso.get()
-//            .load(file)
-//            .placeholder(R.drawable.loading_animation)
-//            .error(R.drawable.ic_broken_image)
-//            .into(this)
-
-
-//        val path = Environment.getExternalStorageDirectory().path + "/" + "fuck"
-//        val path = this.context.applicationContext.filesDir.absolutePath + "/" + "car_images" + "/" + "fuck"
-//        val path =
-//            this.context.applicationContext.getDir("car_images", Context.MODE_PRIVATE).absolutePath + "/" + imgUri
-//        this.setImageURI(Uri.parse(path))
-
-        Glide.with(this.context.applicationContext)
-            .load(imgUri)
-            .apply(
-                RequestOptions()
-                .placeholder(R.drawable.loading_animation)
-                .error(R.drawable.ic_broken_image))
-            .into(this)
+        this.load(imgUri) {
+            crossfade(true)
+            placeholder(R.drawable.loading_animation)
+//            transformations(CircleCropTransformation())
+//            transformations(BlurTransformation(this@setCarImage.context))
+//            transformations(GrayscaleTransformation())
+            transformations(RoundedCornersTransformation(20.0F))
+        }
     }
 }

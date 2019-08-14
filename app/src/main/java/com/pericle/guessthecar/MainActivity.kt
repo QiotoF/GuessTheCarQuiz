@@ -94,9 +94,9 @@ class MainActivity : AppCompatActivity() {
             levelDao.insert(Level("Brands", QuestionType.BRAND))
             levelDao.insert(Level("Models", QuestionType.MODEL))
 
-            for (car in cars) {
-                carDao.insert(car)
-            }
+//            for (car in cars) {
+//                carDao.insert(car)
+//            }
         }
     }
 

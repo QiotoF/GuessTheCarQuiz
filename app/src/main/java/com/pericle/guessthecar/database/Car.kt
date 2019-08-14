@@ -1,7 +1,6 @@
 package com.pericle.guessthecar.database
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 @Entity(tableName = "car_table", primaryKeys = ["brand", "country"])
 data class Car(
@@ -14,9 +13,4 @@ data class Car(
 
     var model: String = ""
 
-//    @PrimaryKey(autoGenerate = true)
-//    var id: Long = 0L
-
-) {
-//    constructor() : this("", "", listOf(), "")
-}
+)

@@ -1,50 +1,35 @@
 package com.pericle.guessthecar
 
 import android.app.Application
-import android.os.Build
-import androidx.work.*
-import com.pericle.guessthecar.work.RefreshDataWorker
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.google.firebase.firestore.FirebaseFirestore
+import com.pericle.guessthecar.database.Car
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 
 class App : Application() {
 
-    private val applicationScope = CoroutineScope(Dispatchers.Default)
+    var cars: List<Car> = listOf()
 
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
-//        delayedInit()
+
+        val db = FirebaseFirestore.getInstance()
+
+
+        loadCars(db)
     }
 
-    private fun delayedInit() {
-        applicationScope.launch {
-            setupRecurringWork()
-        }
+    private fun loadCars(db: FirebaseFirestore) {
+        db.collection("cars").get()
+            .addOnSuccessListener {
+                Timber.i("Success fetching cars!")
+                if (it != null) {
+                    cars = it.toObjects(Car::class.java)
+                }
+            }
+            .addOnFailureListener {
+                Timber.i(it.message, "Fetching cars failed: %s")
+            }
     }
 
-    private fun setupRecurringWork() {
-//        val constraints = Constraints.Builder()
-//            .setRequiredNetworkType(NetworkType.UNMETERED)
-//            .setRequiresBatteryNotLow(true)
-//            .setRequiresCharging(true)
-//            .apply {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    setRequiresDeviceIdle(true)
-//                }
-//            }.build()
-
-        val repeatingRequest
-                = PeriodicWorkRequestBuilder<RefreshDataWorker>(1, TimeUnit.MINUTES)
-//            .setConstraints(constraints)
-            .build()
-
-        WorkManager.getInstance().enqueueUniquePeriodicWork(
-            RefreshDataWorker.WORK_NAME,
-            ExistingPeriodicWorkPolicy.KEEP,
-            repeatingRequest)
-    }
 }

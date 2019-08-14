@@ -1,28 +1,15 @@
 package com.pericle.guessthecar.quiz
 
 import android.app.Application
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.firestore.FirebaseFirestore
+import com.pericle.guessthecar.App
 import com.pericle.guessthecar.database.*
-import com.squareup.okhttp.Callback
-import com.squareup.okhttp.OkHttpClient
-import com.squareup.okhttp.Request
-import com.squareup.okhttp.Response
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
 import kotlinx.coroutines.*
-import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
 
 
 class QuizViewModel(
@@ -68,213 +55,44 @@ class QuizViewModel(
     }
 
 
-//
-//    fun imageDownload(urls: List<String>) {
-//        for (url in urls) {
-//            Picasso.get()
-//                .load(url)
-//                .placeholder(R.drawable.loading_animation)
-//                .into(getTarget(url))
-//        }
-//    }
-//
-//
-//    private fun getTarget(url: String): Target {
-//        return object : Target {
-//
-//            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-//                Thread(Runnable {
-//                    val file = File(Environment.getExternalStorageDirectory().path + "/" + url)
-//                    try {
-//                        file.createNewFile()
-//                        val ostream = FileOutputStream(file)
-//                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
-//                        ostream.flush()
-//                        ostream.close()
-//                    } catch (e: IOException) {
-//                        Timber.e(e.localizedMessage)
-//                    }
-//                }).start()
-//
-//            }
-//
-//            override fun onBitmapFailed(e: Exception, errorDrawable: Drawable) {
-//
-//            }
-//
-//            override fun onPrepareLoad(placeHolderDrawable: Drawable) {
-//
-//            }
-//        }
-//
-//    }
+    private fun initialiseCars() {
 
-//    private suspend fun imageDownload(urls: List<String>) {
-//        withContext(Dispatchers.IO) {
-//            for (urlString in urls) {
-//                val url = URL(urlString)
-//                val input = url.openStream()
-//                try {
-//                    //The sdcard directory e.g. '/sdcard' can be used directly, or
-//                    //more safely abstracted with getExternalStorageDirectory()
-//                    val storagePath = Environment.getExternalStorageDirectory().absolutePath
-//                    val output = FileOutputStream("$storagePath/$urlString")
-//                    try {
-//                        val buffer = ByteArray(1024)
-//                        var bytesRead = 0
-//                        bytesRead = (input.read(buffer, 0, buffer.size))
-//                        while (bytesRead >= 0) {
-//                            output.write(buffer, 0, bytesRead)
-//                            bytesRead = (input.read(buffer, 0, buffer.size))
-//                        }
-//                    } finally {
-//                        output.close()
-//                    }
-//                } finally {
-//                    input.close()
-//                }
-//            }
-//        }
-//    }
-
-    private fun imageDownload(url: String) {
-//        val target = getTarget(url)
-//        Picasso.get()
-//            .load(url)
-//            .placeholder(R.drawable.loading_animation)
-//            .into(target)
-        val client = OkHttpClient()
-
-        val request = Request.Builder()
-            .url(url)
-            .build()
-
-        client.newCall(request).enqueue(object : Callback {
-            override fun onFailure(request: Request, e: IOException) {
-                println("request failed: " + e.message)
-            }
-
-            @Throws(IOException::class)
-            override fun onResponse(response: Response) {
-                val bitmap = BitmapFactory.decodeStream(response.body().byteStream())
-                val file = File(app.getDir("car_images", Context.MODE_PRIVATE), "fuck")
-                try {
-                    //TODO: delete try-catch block
-                    file.createNewFile()
-                    val ostream = FileOutputStream(file)
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
-                    ostream.flush()
-                    ostream.close()
-                } catch (e: IOException) {
-                    Timber.e(e.localizedMessage)
-                }
-            }
-        })
-    }
-
-    //target to save
-    private fun getTarget(url: String): Target {
-        return object : Target {
-            override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-            }
-
-            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                Thread(Runnable {
-                    //                    val file = File(Environment.getExternalStorageDirectory().path + "/" + "fuck")
-
-                    val file = File(app.getDir("car_images", Context.MODE_PRIVATE), "fuck")
-                    try {
-                        file.createNewFile()
-                        val ostream = FileOutputStream(file)
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, ostream)
-                        ostream.flush()
-                        ostream.close()
-                    } catch (e: IOException) {
-                        Timber.e(e.getLocalizedMessage())
-                    }
-                }).start()
-
-            }
-
-            override fun onPrepareLoad(placeHolderDrawable: Drawable) {
-
-            }
-        }
-    }
-
-    private fun setDummyCars() {
-        cars = listOf(
-            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "gsda", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "vds", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "ewfr", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "asd", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "fsd", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "das", country = "fuck", images = listOf("fuck"), model = "fuck"),
-            Car(brand = "Fuck", country = "fuck", images = listOf("fuck"), model = "fuck")
-
-        )
-
+        cars = (this.app as App).cars.shuffled()
         carIterator = cars.listIterator()
         _score.value = 0
         onNextClick()
-    }
 
-
-    private fun initialiseCars() {
 //        db.collection("cars").get()
 //            .addOnSuccessListener {
 //                Timber.i("Success fetching cars!")
 //                if (it != null) {
 //                    cars = it.toObjects(Car::class.java)
-//                    uiScope.launch {
-//                        for (car in cars) {
-//                            imageDownload(car.images[0])
-//                        }
-//                        carIterator = cars.listIterator()
-//                        _score.value = 0
-//                        onNextClick()
-//                    }
+//                    carIterator = cars.listIterator()
+//                    _score.value = 0
+//                    onNextClick()
 //                }
 //            }
 //            .addOnFailureListener {
 //                Timber.i(it.message, "Fetching cars failed: %s")
 //            }
 
-        db.collection("cars")
-            .addSnapshotListener { value, e ->
-                if (e != null) {
-                    return@addSnapshotListener
-                }
-                cars = value!!.toObjects(Car::class.java)
-                uiScope.launch {
-//                    for (car in cars) {
-//                        imageDownload(car.images[0])
-//                    }
-                    carIterator = cars.listIterator()
-                    _score.value = 0
-                    onNextClick()
-                }
-            }
+//        db.collection("cars")
+//            .addSnapshotListener { value, e ->
+//                if (e != null) {
+//                    return@addSnapshotListener
+//                }
+//                cars = value!!.toObjects(Car::class.java)
+//                uiScope.launch {
+////                    for (car in cars) {
+////                        imageDownload(car.images[0])
+////                    }
+//                    carIterator = cars.listIterator()
+//                    _score.value = 0
+//                    onNextClick()
+//                }
+//            }
 
-//        setDummyCars()
 
-//        uiScope.launch {
-//            cars = getCarsFromDatabase()
-//            carIterator = cars.listIterator()
-//            _score.value = 0
-//            onNextClick()
-//        }
-    }
-
-    private suspend fun getCarsFromDatabase(): List<Car> {
-        return withContext(Dispatchers.IO) {
-            carDao.getAllCars().shuffled()
-        }
     }
 
     fun onNextClick() {
