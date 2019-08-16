@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.MyDatabase
 import com.pericle.guessthecar.databinding.FragmentQuizBinding
@@ -41,6 +42,16 @@ class QuizFragment : Fragment() {
         viewModel.score.observe(this, Observer {
             (activity as AppCompatActivity).supportActionBar?.title = it.toString()
         })
+
+        viewModel.onFinish.observe(this, Observer {
+            it?.let {
+                if (it) {
+                    this.findNavController().popBackStack()
+                    viewModel.onFinishCompleted()
+                }
+            }
+        })
+
 
         return binding.root
     }

@@ -44,11 +44,17 @@ class QuizViewModel(
     val isThirdCorrect = MutableLiveData<Answer>()
     val isFourthCorrect = MutableLiveData<Answer>()
 
+    private val _onFinish = MutableLiveData<Boolean>()
+    val onFinish: LiveData<Boolean>
+        get() = _onFinish
+
     private var answerClicked: Boolean = false
 
     private val _nextBtnActive = MutableLiveData<Boolean>()
     val nextBtnActive: LiveData<Boolean>
         get() = _nextBtnActive
+
+    private var onWrongAnswered = false
 
     init {
         initialiseCars()
@@ -56,58 +62,31 @@ class QuizViewModel(
 
 
     private fun initialiseCars() {
-
         cars = (this.app as App).cars.shuffled()
         carIterator = cars.listIterator()
         _score.value = 0
         onNextClick()
-
-//        db.collection("cars").get()
-//            .addOnSuccessListener {
-//                Timber.i("Success fetching cars!")
-//                if (it != null) {
-//                    cars = it.toObjects(Car::class.java)
-//                    carIterator = cars.listIterator()
-//                    _score.value = 0
-//                    onNextClick()
-//                }
-//            }
-//            .addOnFailureListener {
-//                Timber.i(it.message, "Fetching cars failed: %s")
-//            }
-
-//        db.collection("cars")
-//            .addSnapshotListener { value, e ->
-//                if (e != null) {
-//                    return@addSnapshotListener
-//                }
-//                cars = value!!.toObjects(Car::class.java)
-//                uiScope.launch {
-////                    for (car in cars) {
-////                        imageDownload(car.images[0])
-////                    }
-//                    carIterator = cars.listIterator()
-//                    _score.value = 0
-//                    onNextClick()
-//                }
-//            }
-
-
     }
 
+    fun onFinishCompleted() {
+        _onFinish.value = false
+    }
+
+
     fun onNextClick() {
-        if (carIterator.hasNext()) {
-            answerClicked = false
-            setCar()
-            setAnswers()
-            _nextBtnActive.value = false
-            _score.value = _score.value?.inc()
-        } else {
+        if (!carIterator.hasNext() || onWrongAnswered) {
             if (score.value!! > level.highScore) {
                 uiScope.launch {
                     updateLevel()
                 }
             }
+            _onFinish.value = true
+        } else {
+            answerClicked = false
+            setCar()
+            setAnswers()
+            _nextBtnActive.value = false
+            _score.value = _score.value?.inc()
         }
     }
 
@@ -147,7 +126,9 @@ class QuizViewModel(
     private fun checkAnswer(btn: Button) {
         if (level.checkAnswer(currentCar.value, btn.text.toString())) {
             btn.setIsCorrect(Answer.TRUE)
+            onWrongAnswered = false
         } else {
+            onWrongAnswered = true
             when (level.answerType(currentCar.value)) {
                 this._firstAnswer.value -> isFirstCorrect.value = Answer.TRUE
                 secAnswer.value -> isSecondCorrect.value = Answer.TRUE
