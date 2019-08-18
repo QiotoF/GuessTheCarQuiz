@@ -2,6 +2,8 @@ package com.pericle.guessthecar.quiz
 
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
@@ -38,4 +40,9 @@ fun ImageView.setCarImage(car: Car?) {
 @BindingAdapter("android:src" )
 fun ImageView.setImageViewResource(src: Int) {
     this.setImageResource(src)
+}
+
+@BindingAdapter("progressText")
+fun TextView.setProgressText(score: Int) {
+    this.text = "${score.toString()}/100"
 }
