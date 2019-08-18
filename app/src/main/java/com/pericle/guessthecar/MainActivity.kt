@@ -59,33 +59,6 @@ class MainActivity : AppCompatActivity() {
             insertAll(cars)
         }
 
-//        val db = FirebaseFirestore.getInstance()
-//        db.collection("cars").get()
-
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 1
-            )
-
-        }
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-
-            ActivityCompat.requestPermissions(
-                this, arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 2
-            )
-
-        }
     }
 
     private suspend fun insertAll(cars: List<Car>) {
@@ -93,6 +66,7 @@ class MainActivity : AppCompatActivity() {
 
             levelDao.insert(Level("Brands", QuestionType.BRAND))
             levelDao.insert(Level("Models", QuestionType.MODEL))
+            levelDao.insert(Level("Countries", QuestionType.COUNTRY))
 
 //            for (car in cars) {
 //                carDao.insert(car)

@@ -91,9 +91,9 @@ class QuizViewModel(
     }
 
     private suspend fun updateLevel() {
-        level.highScore = _score.value!!
+        level.highScore = if (onWrongAnswered) _score.value!! - 1 else _score.value!!
         withContext(Dispatchers.IO) {
-            levelDao.insert(level)
+            levelDao.updateLevel(level)
         }
     }
 
