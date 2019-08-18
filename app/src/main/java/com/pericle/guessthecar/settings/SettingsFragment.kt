@@ -1,6 +1,7 @@
 package com.pericle.guessthecar.settings
 
 
+import android.R
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -25,28 +26,31 @@ class SettingsFragment : PreferenceFragmentCompat() {
         repository = LevelRepository(MyDatabase.getInstance(this.context!!).levelDao)
         findPreference("delete").setOnPreferenceClickListener {
 
-            AlertDialog.Builder(context!!)
-                .setTitle("Warning")
-                .setMessage("Are you sure you want to delete all progress?")
-
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
-                .setPositiveButton(android.R.string.yes, DialogInterface.OnClickListener { dialog, which ->
-                    // Continue with delete operation
-                    deleteProgress()
-                })
-
-                // A null listener allows the button to dismiss the dialog and take no further action.
-                .setNegativeButton(android.R.string.no, null)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show()
+            showDeleteDialog()
 
             true
         }
     }
 
-    private fun deleteProgress() {
+    private fun showDeleteDialog() {
+        AlertDialog.Builder(context!!)
+            .setTitle("Warning")
+            .setMessage("Are you sure you want to delete all progress?")
 
+            // Specifying a listener allows you to take an action before dismissing the dialog.
+            // The dialog is automatically dismissed when a dialog button is clicked.
+            .setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+                // Continue with delete operation
+                deleteProgress()
+            })
+
+            // A null listener allows the button to dismiss the dialog and take no further action.
+            .setNegativeButton(R.string.no, null)
+            .setIcon(R.drawable.ic_dialog_alert)
+            .show()
+    }
+
+    private fun deleteProgress() {
         uiScope.launch {
             repository.deleteAllProgress()
         }

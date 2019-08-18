@@ -44,6 +44,10 @@ class QuizViewModel(
     val isThirdCorrect = MutableLiveData<Answer>()
     val isFourthCorrect = MutableLiveData<Answer>()
 
+    private val _nextBtnText = MutableLiveData<String>()
+    val nextBtnText: LiveData<String>
+        get() = _nextBtnText
+
     private val _onFinish = MutableLiveData<Boolean>()
     val onFinish: LiveData<Boolean>
         get() = _onFinish
@@ -58,6 +62,7 @@ class QuizViewModel(
 
     init {
         initialiseCars()
+        _nextBtnText.value = "Next"
     }
 
 
@@ -136,6 +141,7 @@ class QuizViewModel(
                 fourthAnswer.value -> isFourthCorrect.value = Answer.TRUE
             }
             btn.setIsCorrect(Answer.FALSE)
+            _nextBtnText.value = "Finish"
         }
     }
 }
