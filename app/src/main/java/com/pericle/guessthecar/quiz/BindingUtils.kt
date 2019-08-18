@@ -4,12 +4,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import coil.api.load
-import coil.transform.BlurTransformation
-import coil.transform.CircleCropTransformation
-import coil.transform.GrayscaleTransformation
 import coil.transform.RoundedCornersTransformation
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.Car
 
@@ -27,7 +22,7 @@ fun Button.setIsCorrect(answer: Answer?) {
 
 @BindingAdapter("carImage")
 fun ImageView.setCarImage(car: Car?) {
-    car?.let{
+    car?.let {
         val imgUri = car.images.random()/*.toUri().buildUpon().scheme("https").build()*/
         this.load(imgUri) {
             crossfade(true)
@@ -38,4 +33,9 @@ fun ImageView.setCarImage(car: Car?) {
             transformations(RoundedCornersTransformation(20.0F))
         }
     }
+}
+
+@BindingAdapter("android:src" )
+fun ImageView.setImageViewResource(src: Int) {
+    this.setImageResource(src)
 }

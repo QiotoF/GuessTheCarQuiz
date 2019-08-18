@@ -3,6 +3,7 @@ package com.pericle.guessthecar.database
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.pericle.guessthecar.R
 import kotlinx.android.parcel.Parcelize
 
 enum class QuestionType {
@@ -18,7 +19,10 @@ data class Level(
 
     val questionType: QuestionType,
 
+    var imgSrc: Int,
+
     var highScore: Int = 0
+
 
 ) : Parcelable
 
@@ -57,5 +61,5 @@ fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {
 
 fun Level.checkAnswer(car: Car?, answer: String?): Boolean = answerType(car) == answer
 
-//}
-
+val Level.formattedScore : String
+    get() = this.highScore.toString() + "/100"

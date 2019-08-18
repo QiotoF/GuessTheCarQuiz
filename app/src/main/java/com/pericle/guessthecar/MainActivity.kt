@@ -64,9 +64,9 @@ class MainActivity : AppCompatActivity() {
     private suspend fun insertAll(cars: List<Car>) {
         withContext(Dispatchers.IO) {
 
-            levelDao.insert(Level("Brands", QuestionType.BRAND))
-            levelDao.insert(Level("Models", QuestionType.MODEL))
-            levelDao.insert(Level("Countries", QuestionType.COUNTRY))
+            levelDao.insert(Level("Brands", QuestionType.BRAND, R.drawable.car1))
+            levelDao.insert(Level("Models", QuestionType.MODEL, R.drawable.car2))
+            levelDao.insert(Level("Countries", QuestionType.COUNTRY, R.drawable.car3))
 
 //            for (car in cars) {
 //                carDao.insert(car)
