@@ -3,7 +3,6 @@ package com.pericle.guessthecar.database
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.pericle.guessthecar.R
 import kotlinx.android.parcel.Parcelize
 
 enum class QuestionType {
@@ -34,7 +33,7 @@ fun Level.answerType(it: Car?): String? = when (questionType) {
         it?.run { it.brand + " " + it.model }
     }
     QuestionType.COUNTRY -> {
-        it?.country
+        countryOf(it?.brand)
     }
 }
 
@@ -50,6 +49,11 @@ fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {
         .filter { it != answerType(car) }
         .distinct()
         .shuffled()
+        .run {
+            if (this@createAnswerList.questionType == QuestionType.MODEL) sortedByDescending {
+                it?.contains(car?.brand!!)
+            } else this
+        }
         .take(3)
         .toMutableList()
     with(answers) {
@@ -61,5 +65,5 @@ fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {
 
 fun Level.checkAnswer(car: Car?, answer: String?): Boolean = answerType(car) == answer
 
-val Level.formattedScore : String
+val Level.formattedScore: String
     get() = this.highScore.toString() + "/100"

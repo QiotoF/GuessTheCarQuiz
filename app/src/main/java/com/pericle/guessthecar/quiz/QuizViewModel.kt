@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 
 class QuizViewModel(
     val level: Level,
-    val carDao: CarDao,
+//    val carDao: CarDao,
     val levelDao: LevelDao,
     val app: Application
 ) : AndroidViewModel(app) {

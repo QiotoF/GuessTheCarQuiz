@@ -6,14 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Car::class, Level::class], version = 2, exportSchema = false)
+@Database(entities = [Level::class], version = 3, exportSchema = false)
 @TypeConverters(MyConverters::class)
 abstract class MyDatabase : RoomDatabase() {
 
     /**
      * Connects the carDao to the DAO.
      */
-    abstract val carDao: CarDao
+//    abstract val carDao: CarDao
     abstract val levelDao: LevelDao
 
     /**

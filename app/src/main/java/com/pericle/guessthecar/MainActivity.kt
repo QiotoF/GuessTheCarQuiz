@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
     private lateinit var levelDao: LevelDao
-    private lateinit var carDao: CarDao
+//    private lateinit var carDao: CarDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         )
         val application = requireNotNull(this).application
         levelDao = MyDatabase.getInstance(application).levelDao
-        carDao = MyDatabase.getInstance(application).carDao
+//        carDao = MyDatabase.getInstance(application).carDao
         uiScope.launch {
             insertAll(cars)
         }

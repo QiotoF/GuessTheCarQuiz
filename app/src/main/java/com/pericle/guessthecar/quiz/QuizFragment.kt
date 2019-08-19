@@ -29,9 +29,9 @@ class QuizFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val arguments = QuizFragmentArgs.fromBundle(arguments!!)
-        val carDao = MyDatabase.getInstance(application).carDao
+//        val carDao = MyDatabase.getInstance(application).carDao
         val levelDao = MyDatabase.getInstance(application).levelDao
-        val viewModelFactory = QuizViewModelFactory(arguments.level, carDao, levelDao, application)
+        val viewModelFactory = QuizViewModelFactory(arguments.level, /*carDao,*/ levelDao, application)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel::class.java)
         binding.viewModel = viewModel
 
