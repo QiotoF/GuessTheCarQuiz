@@ -32,22 +32,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@drawable/car" />
+            tools:src="@drawable/car1" />
 
         <Button
-            android:background="@drawable/rectangle_white_normal"
             android:id="@+id/btn_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/rectangle_white_normal"
             android:enabled="@{viewModel.nextBtnActive}"
             android:onClick="@{() -> viewModel.onNextClick()}"
             android:text="@{viewModel.nextBtnText}"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Next" />
 
         <Button
+            style="@style/AnswerButtonStyle"
             android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -59,12 +62,14 @@
             android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.fourthAnswer}"
+            android:textAllCaps="false"
             app:isCorrect="@{viewModel.isFourthCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/btn_next"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
+            style="@style/AnswerButtonStyle"
             android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -76,12 +81,15 @@
             android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.thirdAnswer}"
+            android:textAllCaps="false"
             app:isCorrect="@{viewModel.isThirdCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/button2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
+            style="@style/AnswerButtonStyle"
+            tools:text="Ferrari FF"
             android:id="@+id/button4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -99,22 +107,26 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:background="@drawable/rectangle_white_normal"
             android:id="@+id/button5"
+            style="@style/AnswerButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:background="@drawable/rectangle_white_normal"
             android:clickable="true"
             android:focusable="true"
+            android:fontFamily="@font/acme"
             android:foreground="?attr/selectableItemBackground"
             android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
             android:text="@{viewModel.firstAnswer}"
+            android:textSize="18sp"
             app:isCorrect="@{viewModel.isFirstCorrect}"
             app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Pagani Zonda" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
