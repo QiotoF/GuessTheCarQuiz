@@ -1,25 +1,26 @@
 package com.pericle.guessthecar.quiz
 
 import android.app.Application
+import android.media.SoundPool
 import android.view.View
 import android.widget.Button
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pericle.guessthecar.App
+import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.*
 import kotlinx.coroutines.*
 
 
 class QuizViewModel(
     val level: Level,
-//    val carDao: CarDao,
     val levelDao: LevelDao,
     val app: Application
 ) : AndroidViewModel(app) {
 
-    private val db = FirebaseFirestore.getInstance()
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -60,9 +61,24 @@ class QuizViewModel(
 
     private var onWrongAnswered = false
 
+    private val correctSound = SoundPool.Builder().build()
+    private val correctSoundId = correctSound.load(app, R.raw.correct, 0)
+    private val wrongSound = SoundPool.Builder().build()
+    private val wrongSoundId = wrongSound.load(app, R.raw.wrong, 0)
+    private val isSoundOn = MutableLiveData<Boolean>()
+    private val _soundImage = Transformations.map(isSoundOn) {
+        when (it) {
+            true -> R.drawable.ic_speaker
+            false -> R.drawable.ic_speaker_not
+        }
+    }
+    val soundImage: LiveData<Int>
+        get() = _soundImage
+
     init {
         initialiseCars()
         _nextBtnText.value = "Next"
+        isSoundOn.value = true
     }
 
 
@@ -132,6 +148,7 @@ class QuizViewModel(
         if (level.checkAnswer(currentCar.value, btn.text.toString())) {
             btn.setIsCorrect(Answer.TRUE)
             onWrongAnswered = false
+            playCorrectSound()
         } else {
             onWrongAnswered = true
             when (level.answerType(currentCar.value)) {
@@ -142,7 +159,23 @@ class QuizViewModel(
             }
             btn.setIsCorrect(Answer.FALSE)
             _nextBtnText.value = "Finish"
+            playWrongSound()
         }
     }
-}
 
+    private fun playCorrectSound() {
+        if (isSoundOn.value!!) {
+            correctSound.play(correctSoundId, 1F, 1F, 0, 0, 1F)
+        }
+    }
+
+    private fun playWrongSound() {
+        if (isSoundOn.value!!) {
+            wrongSound.play(wrongSoundId, 1F, 1F, 0, 0, 1F)
+        }
+    }
+
+    fun onSoundClick() {
+        isSoundOn.value = !isSoundOn.value!!
+    }
+}

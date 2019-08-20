@@ -1,10 +1,8 @@
 package com.pericle.guessthecar.quiz
 
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.LiveData
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.pericle.guessthecar.R
@@ -40,6 +38,11 @@ fun ImageView.setCarImage(car: Car?) {
 @BindingAdapter("android:src" )
 fun ImageView.setImageViewResource(src: Int) {
     this.setImageResource(src)
+}
+
+@BindingAdapter("app:srcCompat")
+fun ImageButton.setImageButtonResource(src: LiveData<Int>){
+    src.value?.let { this.setImageResource(it) }
 }
 
 @BindingAdapter("progressText")
