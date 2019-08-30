@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Preference
         android:icon="@drawable/ic_baseline_delete_outline_24px"
         app:key="delete"
         app:title="Delete all progress" />
+
+    <Preference
+        app:key="add"
+        app:title="Add data" />
 
 </PreferenceScreen>

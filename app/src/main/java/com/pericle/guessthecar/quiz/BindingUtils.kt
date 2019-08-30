@@ -1,6 +1,9 @@
 package com.pericle.guessthecar.quiz
 
-import android.widget.*
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import coil.api.load
@@ -27,6 +30,7 @@ fun ImageView.setCarImage(car: Car?) {
         this.load(imgUri) {
             crossfade(true)
             placeholder(R.drawable.loading_animation)
+            error(R.drawable.ic_broken_image)
 //            transformations(CircleCropTransformation())
 //            transformations(BlurTransformation(this@setCarImage.context))
 //            transformations(GrayscaleTransformation())
@@ -35,13 +39,13 @@ fun ImageView.setCarImage(car: Car?) {
     }
 }
 
-@BindingAdapter("android:src" )
+@BindingAdapter("android:src")
 fun ImageView.setImageViewResource(src: Int) {
     this.setImageResource(src)
 }
 
 @BindingAdapter("app:srcCompat")
-fun ImageButton.setImageButtonResource(src: LiveData<Int>){
+fun ImageButton.setImageButtonResource(src: LiveData<Int>) {
     src.value?.let { this.setImageResource(it) }
 }
 

@@ -7,7 +7,7 @@ data class Car(
 
 //    var country: String = "",
 
-    var images: List<String> = listOf(),
+    var images: MutableList<String> = mutableListOf(),
 
     var model: String = ""
 

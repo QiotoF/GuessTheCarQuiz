@@ -77,6 +77,8 @@ dependencies {
     implementation("io.coil-kt:coil:0.6.0")
 
     implementation "com.android.support:preference-v7:28.0.0"
+
+    implementation 'com.google.firebase:firebase-storage:19.0.0'
 }
 
 android {

@@ -6,12 +6,14 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceFragmentCompat
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
+import com.google.firebase.storage.FirebaseStorage
+import com.pericle.guessthecar.database.Car
 import com.pericle.guessthecar.database.MyDatabase
 import com.pericle.guessthecar.repository.LevelRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import okhttp3.internal.wait
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -29,6 +31,44 @@ class SettingsFragment : PreferenceFragmentCompat() {
             showDeleteDialog()
 
             true
+        }
+
+        findPreference("add").setOnPreferenceClickListener {
+            addData()
+
+            true
+        }
+    }
+
+    private fun addData() {
+        val db = FirebaseFirestore.getInstance()
+        val storage = FirebaseStorage.getInstance()
+        // Create a storage reference from our app
+        val storageRef = storage.reference
+        val carsRef = storageRef.child("cars")
+        carsRef.listAll().addOnCompleteListener {
+            val cars = mutableMapOf<String, Car>()
+            val fuck2 = it.result
+            val fuck3 = fuck2?.items
+            for (item in fuck3!!) {
+                val name = item.name.substringBeforeLast(" ")
+                val brand = name.substringBefore(" ")
+                val model = name.substringAfter(" ")
+                val images = mutableListOf<String>()
+                val car = Car(brand = brand, model = model, images = images)
+                if (!cars.containsKey("name")) {
+                    cars[name] = car
+                }
+                item.downloadUrl.addOnCompleteListener { uri ->
+                    cars[name]?.images?.add(uri.result.toString())
+                    if (item == fuck3.last()) {
+                        for (curcar in cars) {
+                            db.collection("cars").document(curcar.key).set(curcar.value)
+                        }
+                    }
+                }
+
+            }
         }
     }
 
