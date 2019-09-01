@@ -5,19 +5,24 @@ import coil.Coil
 import coil.api.load
 import coil.request.CachePolicy
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.storage.FirebaseStorage
 import com.pericle.guessthecar.database.Car
+import kotlinx.coroutines.*
 import timber.log.Timber
 
 class App : Application() {
 
     var cars: List<Car> = listOf()
+    val job = Job()
+    val uiScope = CoroutineScope(Dispatchers.Main + job)
 
     override fun onCreate() {
         super.onCreate()
         Timber.plant(Timber.DebugTree())
         val db = FirebaseFirestore.getInstance()
-        loadCars(db)
+        uiScope.launch {
+            loadCars(db)
+
+        }
 
 //        val storage = FirebaseStorage.getInstance()
 //        // Create a storage reference from our app
@@ -30,18 +35,21 @@ class App : Application() {
 //        var ch = storageRef.child("Lamborghini Reventon.jpg")
     }
 
-    private fun loadCars(db: FirebaseFirestore) {
-        db.collection("cars").get()
-            .addOnSuccessListener {
-                Timber.i("Success fetching cars!")
-                if (it != null) {
-                    cars = it.toObjects(Car::class.java)
+    private suspend fun loadCars(db: FirebaseFirestore) {
+        withContext(Dispatchers.IO) {
+            db.collection("cars").get()
+                .addOnSuccessListener {
+                    Timber.i("Success fetching cars!")
+                    if (it != null) {
+                        cars = it.toObjects(Car::class.java)
+                    }
+                    prefetch()
                 }
-                prefetch()
-            }
-            .addOnFailureListener {
-                Timber.i(it.message, "Fetching cars failed: %s")
-            }
+                .addOnFailureListener {
+                    Timber.i(it.message, "Fetching cars failed: %s")
+                }
+        }
+
     }
 
     private fun prefetch() {
