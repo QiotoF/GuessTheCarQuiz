@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/settingsFragment"
-        android:icon="@drawable/ic_settings"
-        android:title="@string/settings" />
+    <group android:id="@+id/main_group">
+        <item
+            android:id="@+id/rate"
+            android:icon="@drawable/ic_rating"
+            android:title="@string/rate" />
 
-    <item
-        android:id="@+id/rate"
-        android:icon="@drawable/ic_rating"
-        android:title="@string/rate" />
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/share" />
 
-    <item
-        android:id="@+id/share"
-        android:icon="@drawable/ic_share"
-        android:title="@string/share" />
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/settings" />
 
-    <item
-        android:id="@+id/privacy_policy"
-        android:icon="@drawable/ic_privacy_policy"
-        android:title="@string/privacy_policy" />
+        <item
+            android:id="@+id/privacy_policy"
+            android:icon="@drawable/ic_privacy_policy"
+            android:title="@string/privacy_policy" />
+    </group>
+
+    <group android:id="@+id/quit_group">
+        <item
+            android:id="@+id/quit"
+            android:icon="@drawable/ic_exit"
+            android:title="@string/exit" />
+    </group>
 
 </menu>
