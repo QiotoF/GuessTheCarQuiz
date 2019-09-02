@@ -2,6 +2,7 @@ package com.pericle.guessthecar.levels
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -31,6 +32,8 @@ class LevelsFragment : Fragment() {
         val dataSource = MyDatabase.getInstance(application).levelDao
         val viewModelFactory = LevelsViewModelFactory(dataSource)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LevelsViewModel::class.java)
+
+        (activity as AppCompatActivity).supportActionBar?.title = "Guess the Car!"
 
         val adapter = LevelsAdapter(LevelListener { level ->
             viewModel.onLevelClicked(level)

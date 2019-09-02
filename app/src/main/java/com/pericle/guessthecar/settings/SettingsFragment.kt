@@ -5,6 +5,7 @@ import android.R
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
@@ -24,6 +25,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var repository: LevelRepository
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+        (activity as AppCompatActivity).supportActionBar?.title = "Settings"
         setPreferencesFromResource(com.pericle.guessthecar.R.xml.preferences, rootKey)
         repository = LevelRepository(MyDatabase.getInstance(this.context!!).levelDao)
         findPreference("delete").setOnPreferenceClickListener {
