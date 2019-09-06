@@ -1,11 +1,8 @@
 package com.pericle.guessthecar
 
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -13,13 +10,23 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.android.material.navigation.NavigationView
 import com.pericle.guessthecar.database.*
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
-import timber.log.Timber
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        when (p0.itemId) {
+            R.id.rate -> rateApp(this)
+            R.id.share -> shareApp(this)
+            R.id.privacy_policy -> openPrivacyPolicy(this)
+            R.id.exit -> finish()
+        }
+        return true
+    }
+
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -31,7 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        val binding =
+            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
@@ -45,6 +53,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         NavigationUI.setupWithNavController(binding.navView, navController)
+        binding.navView.setNavigationItemSelectedListener(this)
         val cars = listOf<Car>(
 //            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
 //            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),
@@ -78,4 +87,5 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.nav_host_fragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
+
 }

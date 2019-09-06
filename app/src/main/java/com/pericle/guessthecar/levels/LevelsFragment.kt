@@ -33,7 +33,7 @@ class LevelsFragment : Fragment() {
         val viewModelFactory = LevelsViewModelFactory(dataSource)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LevelsViewModel::class.java)
 
-        (activity as AppCompatActivity).supportActionBar?.title = "Guess the Car!"
+
 
         val adapter = LevelsAdapter(LevelListener { level ->
             viewModel.onLevelClicked(level)
