@@ -25,16 +25,25 @@ data class Level(
 
 ) : Parcelable
 
-fun Level.answerType(it: Car?): String? = when (questionType) {
-    QuestionType.BRAND -> {
-        it?.brand
+fun <T> Level.answerType(it: T?): String? {
+    if (it is Car) {
+        return (it as Car).let {
+            when (questionType) {
+                QuestionType.BRAND -> {
+                    it.brand
+                }
+                QuestionType.MODEL -> {
+                    it.run { it.brand + " " + it.model }
+                }
+                QuestionType.COUNTRY -> {
+                    countryOf(it)
+                }
+            }
+        }
+    } else {
+        return null
     }
-    QuestionType.MODEL -> {
-        it?.run { it.brand + " " + it.model }
-    }
-    QuestionType.COUNTRY -> {
-        countryOf(it?.brand)
-    }
+
 }
 
 //abstract class Level : Serializable {

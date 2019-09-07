@@ -11,6 +11,7 @@ import androidx.lifecycle.Transformations
 import com.google.firebase.firestore.FirebaseFirestore
 import com.pericle.guessthecar.App
 import com.pericle.guessthecar.R
+import com.pericle.guessthecar.compareTo
 import com.pericle.guessthecar.database.*
 import kotlinx.coroutines.*
 
@@ -25,8 +26,8 @@ class QuizViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var cars = listOf<Car>()
-    private lateinit var carIterator: ListIterator<Car>
+    private var cars = listOf<QuizItem>()
+    private lateinit var carIterator: ListIterator<QuizItem>
     val currentCar = MutableLiveData<Car>()
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int>
@@ -96,7 +97,7 @@ class QuizViewModel(
 
     fun onNextClick() {
         if (!carIterator.hasNext() || onWrongAnswered) {
-            if (score.value!! > level.highScore) {
+            if (level < score.value!!) {
                 uiScope.launch {
                     updateLevel()
                 }
@@ -111,6 +112,8 @@ class QuizViewModel(
         }
     }
 
+
+
     private suspend fun updateLevel() {
         level.highScore = if (onWrongAnswered) _score.value!! - 1 else _score.value!!
         withContext(Dispatchers.IO) {
@@ -120,11 +123,11 @@ class QuizViewModel(
 
 
     private fun setCar() {
-        currentCar.value = carIterator.next()
+        currentCar.value = carIterator.next() as Car
     }
 
     private fun setAnswers() {
-        answers = level.createAnswerList(currentCar.value, cars)
+        answers = level.createAnswerList(currentCar.value, cars as List<Car>)
         this._firstAnswer.value = answers[0]
         secAnswer.value = answers[1]
         thirdAnswer.value = answers[2]
@@ -145,13 +148,13 @@ class QuizViewModel(
     }
 
     private fun checkAnswer(btn: Button) {
-        if (level.checkAnswer(currentCar.value, btn.text.toString())) {
+        if (level.checkAnswer(currentCar.value as Car, btn.text.toString())) {
             btn.setIsCorrect(Answer.TRUE)
             onWrongAnswered = false
             playCorrectSound()
         } else {
             onWrongAnswered = true
-            when (level.answerType(currentCar.value)) {
+            when (level.answerType(currentCar.value as Car)) {
                 this._firstAnswer.value -> isFirstCorrect.value = Answer.TRUE
                 secAnswer.value -> isSecondCorrect.value = Answer.TRUE
                 thirdAnswer.value -> isThirdCorrect.value = Answer.TRUE
