@@ -5,7 +5,7 @@ import coil.Coil
 import coil.api.load
 import coil.request.CachePolicy
 import com.google.firebase.firestore.FirebaseFirestore
-import com.pericle.guessthecar.database.Car
+import com.pericle.guessthecar.entity.Car
 import kotlinx.coroutines.*
 import timber.log.Timber
 

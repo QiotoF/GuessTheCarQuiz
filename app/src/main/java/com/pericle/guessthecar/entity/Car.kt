@@ -1,9 +1,5 @@
-package com.pericle.guessthecar.database
+package com.pericle.guessthecar.entity
 
-//@Entity(tableName = "car_table", primaryKeys = ["brand", "country"])
-abstract class QuizItem(
-    open var images: MutableList<String>
-)
 
 data class Car(
 

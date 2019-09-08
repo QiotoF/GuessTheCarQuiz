@@ -1,13 +1,10 @@
-package com.pericle.guessthecar.database
+package com.pericle.guessthecar.entity
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-enum class QuestionType {
-    BRAND, MODEL, COUNTRY
-}
 
 @Parcelize
 @Entity(tableName = "level_table")
@@ -45,12 +42,6 @@ fun <T> Level.answerType(it: T?): String? {
     }
 
 }
-
-//abstract class Level : Serializable {
-
-//    abstract val name: String
-
-//    abstract fun getAnswerType(car: Car?): String?
 
 fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {
     val answers = cars

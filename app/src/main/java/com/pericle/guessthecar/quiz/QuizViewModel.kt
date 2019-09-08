@@ -8,11 +8,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.google.firebase.firestore.FirebaseFirestore
 import com.pericle.guessthecar.App
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.compareTo
+import com.pericle.guessthecar.utils.compareTo
 import com.pericle.guessthecar.database.*
+import com.pericle.guessthecar.entity.*
+import com.pericle.guessthecar.utils.setIsCorrect
 import kotlinx.coroutines.*
 
 

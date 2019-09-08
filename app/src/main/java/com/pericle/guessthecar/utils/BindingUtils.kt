@@ -1,4 +1,4 @@
-package com.pericle.guessthecar.quiz
+package com.pericle.guessthecar.utils
 
 import android.widget.Button
 import android.widget.ImageButton
@@ -9,7 +9,8 @@ import androidx.lifecycle.LiveData
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.database.Car
+import com.pericle.guessthecar.entity.Car
+import com.pericle.guessthecar.entity.Answer
 
 @BindingAdapter("isCorrect")
 fun Button.setIsCorrect(answer: Answer?) {
@@ -31,9 +32,6 @@ fun ImageView.setCarImage(car: Car?) {
             crossfade(true)
             placeholder(R.drawable.loading_animation)
             error(R.drawable.ic_broken_image)
-//            transformations(CircleCropTransformation())
-//            transformations(BlurTransformation(this@setCarImage.context))
-//            transformations(GrayscaleTransformation())
             transformations(RoundedCornersTransformation(20.0F))
         }
     }

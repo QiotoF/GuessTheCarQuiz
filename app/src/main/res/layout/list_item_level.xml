@@ -9,7 +9,7 @@
 
         <variable
             name="level"
-            type="com.pericle.guessthecar.database.Level" />
+            type="com.pericle.guessthecar.entity.Level" />
 
         <variable
             name="clickListener"

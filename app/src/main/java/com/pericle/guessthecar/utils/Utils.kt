@@ -1,12 +1,11 @@
-package com.pericle.guessthecar
+package com.pericle.guessthecar.utils
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import androidx.core.content.ContextCompat.startActivity
-import androidx.core.content.ContextCompat.startActivity
-import com.pericle.guessthecar.database.Level
+import com.pericle.guessthecar.R
+import com.pericle.guessthecar.entity.Level
 
 
 fun shareApp(activity: Activity) {

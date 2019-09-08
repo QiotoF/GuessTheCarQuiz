@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.pericle.guessthecar.entity.Level
 
 @Database(entities = [Level::class], version = 3, exportSchema = false)
-@TypeConverters(MyConverters::class)
-abstract class MyDatabase : RoomDatabase() {
+@TypeConverters(LevelConverters::class)
+abstract class LevelDatabase : RoomDatabase() {
 
     /**
      * Connects the carDao to the DAO.
@@ -33,7 +34,7 @@ abstract class MyDatabase : RoomDatabase() {
          *  thread to shared data are visible to other threads.
          */
         @Volatile
-        private var INSTANCE: MyDatabase? = null
+        private var INSTANCE: LevelDatabase? = null
 
         /**
          * Helper function to get the carDao.
@@ -52,7 +53,7 @@ abstract class MyDatabase : RoomDatabase() {
          *
          * @param context The application context Singleton, used to get access to the filesystem.
          */
-        fun getInstance(context: Context): MyDatabase {
+        fun getInstance(context: Context): LevelDatabase {
             // Multiple threads can ask for the carDao at the same time, ensure we only initialize
             // it once by using synchronized. Only one thread may enter a synchronized block at a
             // time.
@@ -64,7 +65,7 @@ abstract class MyDatabase : RoomDatabase() {
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        MyDatabase::class.java,
+                        LevelDatabase::class.java,
                         "car_database"
                     )
                         // Wipes and rebuilds instead of migrating if no Migration object.

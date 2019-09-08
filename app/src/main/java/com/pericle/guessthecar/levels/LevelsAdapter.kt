@@ -3,7 +3,7 @@ package com.pericle.guessthecar.levels
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.pericle.guessthecar.database.Level
+import com.pericle.guessthecar.entity.Level
 import com.pericle.guessthecar.databinding.ListItemLevelBinding
 
 class LevelsAdapter(val clickListener: LevelListener) : RecyclerView.Adapter<LevelsAdapter.ViewHolder>() {

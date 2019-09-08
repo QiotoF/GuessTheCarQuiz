@@ -1,4 +1,4 @@
-package com.pericle.guessthecar
+package com.pericle.guessthecar.activity
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -11,8 +11,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.navigation.NavigationView
+import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.*
 import com.pericle.guessthecar.databinding.ActivityMainBinding
+import com.pericle.guessthecar.entity.Car
+import com.pericle.guessthecar.entity.Level
+import com.pericle.guessthecar.entity.QuestionType
+import com.pericle.guessthecar.utils.openPrivacyPolicy
+import com.pericle.guessthecar.utils.rateApp
+import com.pericle.guessthecar.utils.shareApp
 import kotlinx.coroutines.*
 
 
@@ -39,7 +46,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding =
-            DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+            DataBindingUtil.setContentView<ActivityMainBinding>(this,
+                R.layout.activity_main
+            )
         drawerLayout = binding.drawerLayout
         val navController = this.findNavController(R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
@@ -62,8 +71,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 //            Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
         )
         val application = requireNotNull(this).application
-        levelDao = MyDatabase.getInstance(application).levelDao
-//        carDao = MyDatabase.getInstance(application).carDao
+        levelDao = LevelDatabase.getInstance(application).levelDao
+//        carDao = LevelDatabase.getInstance(application).carDao
         uiScope.launch {
             insertAll(cars)
         }
@@ -73,9 +82,24 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private suspend fun insertAll(cars: List<Car>) {
         withContext(Dispatchers.IO) {
 
-            levelDao.insert(Level("Brands", QuestionType.BRAND, R.drawable.logo))
-            levelDao.insert(Level("Models", QuestionType.MODEL, R.drawable.car1))
-            levelDao.insert(Level("Countries", QuestionType.COUNTRY, R.drawable.countries))
+            levelDao.insert(
+                Level(
+                    "Brands", QuestionType.BRAND,
+                    R.drawable.logo
+                )
+            )
+            levelDao.insert(
+                Level(
+                    "Models", QuestionType.MODEL,
+                    R.drawable.car1
+                )
+            )
+            levelDao.insert(
+                Level(
+                    "Countries", QuestionType.COUNTRY,
+                    R.drawable.countries
+                )
+            )
 
 //            for (car in cars) {
 //                carDao.insert(car)

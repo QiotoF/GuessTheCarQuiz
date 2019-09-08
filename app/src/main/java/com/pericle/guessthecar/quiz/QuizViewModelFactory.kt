@@ -3,7 +3,7 @@ package com.pericle.guessthecar.quiz
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.pericle.guessthecar.database.Level
+import com.pericle.guessthecar.entity.Level
 import com.pericle.guessthecar.database.LevelDao
 
 class QuizViewModelFactory(

@@ -1,4 +1,4 @@
-package com.pericle.guessthecar.quiz
+package com.pericle.guessthecar.entity
 
 enum class Answer {
     TRUE,

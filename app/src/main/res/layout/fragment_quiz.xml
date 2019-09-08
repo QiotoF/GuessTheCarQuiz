@@ -7,7 +7,7 @@
 
         <variable
             name="car"
-            type="com.pericle.guessthecar.database.Car" />
+            type="com.pericle.guessthecar.entity.Car" />
 
         <variable
             name="viewModel"

@@ -8,8 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.pericle.guessthecar.database.Car
-import com.pericle.guessthecar.database.MyDatabase
+import com.pericle.guessthecar.entity.Car
+import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.repository.LevelRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(com.pericle.guessthecar.R.xml.preferences, rootKey)
-        repository = LevelRepository(MyDatabase.getInstance(this.context!!).levelDao)
+        repository = LevelRepository(LevelDatabase.getInstance(this.context!!).levelDao)
         findPreference("delete").setOnPreferenceClickListener {
 
             showDeleteDialog()
@@ -56,7 +56,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val brand = name.substringBefore(" ")
                 val model = name.substringAfter(" ")
                 val images = mutableListOf<String>()
-                val car = Car(brand = brand, model = model, images = images)
+                val car = Car(
+                    brand = brand,
+                    model = model,
+                    images = images
+                )
                 if (!cars.containsKey("name")) {
                     cars[name] = car
                 }

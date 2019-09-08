@@ -1,8 +1,9 @@
 package com.pericle.guessthecar.database
 
 import androidx.room.TypeConverter
+import com.pericle.guessthecar.entity.QuestionType
 
-class MyConverters {
+class LevelConverters {
 
     @TypeConverter
     fun fromList(list: List<String>): String = list.joinToString()

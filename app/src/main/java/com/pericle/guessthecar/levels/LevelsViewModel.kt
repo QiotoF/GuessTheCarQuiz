@@ -3,7 +3,7 @@ package com.pericle.guessthecar.levels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.pericle.guessthecar.database.Level
+import com.pericle.guessthecar.entity.Level
 import com.pericle.guessthecar.database.LevelDao
 
 class LevelsViewModel(

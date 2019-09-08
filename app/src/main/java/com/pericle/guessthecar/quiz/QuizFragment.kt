@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.database.MyDatabase
+import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.databinding.FragmentQuizBinding
 
 class QuizFragment : Fragment() {
@@ -29,8 +29,8 @@ class QuizFragment : Fragment() {
 
         val application = requireNotNull(this.activity).application
         val arguments = QuizFragmentArgs.fromBundle(arguments!!)
-//        val carDao = MyDatabase.getInstance(application).carDao
-        val levelDao = MyDatabase.getInstance(application).levelDao
+//        val carDao = LevelDatabase.getInstance(application).carDao
+        val levelDao = LevelDatabase.getInstance(application).levelDao
         val viewModelFactory = QuizViewModelFactory(arguments.level, /*carDao,*/ levelDao, application)
         val viewModel = ViewModelProviders.of(this, viewModelFactory).get(QuizViewModel::class.java)
         binding.viewModel = viewModel
