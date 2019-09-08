@@ -2,6 +2,8 @@ package com.pericle.guessthecar.levels
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -33,7 +35,6 @@ class LevelsFragment : Fragment(), NavigationView.OnNavigationItemSelectedListen
         this.findNavController()
             .navigate(LevelsFragmentDirections.actionLevelsFragmentToSettingsFragment())
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/levelsFragment"
         android:name="com.pericle.guessthecar.levels.LevelsFragment"
-        android:label="LevelsFragment"
-        tools:layout="@layout/fragment_levels" >
+        android:label="Guess The Car"
+        tools:layout="@layout/fragment_levels">
         <action
             android:id="@+id/action_levelsFragment_to_quizFragment"
             app:destination="@id/quizFragment"
@@ -21,8 +21,8 @@
     <fragment
         android:id="@+id/quizFragment"
         android:name="com.pericle.guessthecar.quiz.QuizFragment"
-        android:label="quiz_fragment"
-        tools:layout="@layout/fragment_quiz" >
+        android:label="1"
+        tools:layout="@layout/fragment_quiz">
         <argument
             android:name="level"
             app:argType="com.pericle.guessthecar.database.Level" />
@@ -30,6 +30,6 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.pericle.guessthecar.settings.SettingsFragment"
-        android:label="fragment_settings"
+        android:label="Settings"
         tools:layout="@layout/fragment_settings" />
 </navigation>

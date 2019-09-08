@@ -5,11 +5,12 @@ import android.R
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.pericle.guessthecar.entity.Car
 import com.pericle.guessthecar.database.LevelDatabase
+import com.pericle.guessthecar.entity.Car
 import com.pericle.guessthecar.repository.LevelRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,6 @@ import kotlinx.coroutines.launch
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
-
 
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
