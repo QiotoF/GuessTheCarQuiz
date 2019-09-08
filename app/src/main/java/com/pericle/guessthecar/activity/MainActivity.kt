@@ -1,7 +1,6 @@
 package com.pericle.guessthecar.activity
 
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -10,29 +9,17 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.google.android.material.navigation.NavigationView
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.*
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import com.pericle.guessthecar.entity.Car
-import com.pericle.guessthecar.entity.Level
+import com.pericle.guessthecar.database.Level
 import com.pericle.guessthecar.entity.QuestionType
-import com.pericle.guessthecar.utils.openPrivacyPolicy
-import com.pericle.guessthecar.utils.rateApp
-import com.pericle.guessthecar.utils.shareApp
 import kotlinx.coroutines.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        when (p0.itemId) {
-            R.id.rate -> rateApp(this)
-            R.id.share -> shareApp(this)
-            R.id.privacy_policy -> openPrivacyPolicy(this)
-            R.id.exit -> finish()
-        }
-        return true
-    }
+class MainActivity : AppCompatActivity(){
+
 
 
     private lateinit var drawerLayout: DrawerLayout
@@ -62,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         }
         NavigationUI.setupWithNavController(binding.navView, navController)
-        binding.navView.setNavigationItemSelectedListener(this)
+//        binding.navView.setNavigationItemSelectedListener(this)
         val cars = listOf<Car>(
 //            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
 //            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),

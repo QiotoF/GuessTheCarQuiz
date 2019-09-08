@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.pericle.guessthecar.entity.Level
 
 @Database(entities = [Level::class], version = 3, exportSchema = false)
 @TypeConverters(LevelConverters::class)

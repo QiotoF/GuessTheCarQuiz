@@ -5,7 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.entity.Level
+import com.pericle.guessthecar.database.Level
 
 
 fun shareApp(activity: Activity) {

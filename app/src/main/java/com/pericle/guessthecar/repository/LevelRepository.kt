@@ -1,7 +1,7 @@
 package com.pericle.guessthecar.repository
 
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.entity.Level
+import com.pericle.guessthecar.database.Level
 import com.pericle.guessthecar.database.LevelDao
 import com.pericle.guessthecar.entity.QuestionType
 import kotlinx.coroutines.Dispatchers

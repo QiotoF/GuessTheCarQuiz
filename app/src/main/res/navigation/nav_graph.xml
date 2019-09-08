@@ -14,6 +14,9 @@
             app:destination="@id/quizFragment"
             app:enterAnim="@anim/slide_in_right"
             app:popEnterAnim="@anim/slide_in_right" />
+        <action
+            android:id="@+id/action_levelsFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/quizFragment"
@@ -25,7 +28,7 @@
             app:argType="com.pericle.guessthecar.database.Level" />
     </fragment>
     <fragment
-        android:id="@+id/fuck"
+        android:id="@+id/settingsFragment"
         android:name="com.pericle.guessthecar.settings.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />

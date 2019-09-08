@@ -9,11 +9,31 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.navigation.NavigationView
 import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.databinding.FragmentLevelsBinding
+import com.pericle.guessthecar.utils.openPrivacyPolicy
+import com.pericle.guessthecar.utils.rateApp
+import com.pericle.guessthecar.utils.shareApp
 
-class LevelsFragment : Fragment() {
+class LevelsFragment : Fragment(), NavigationView.OnNavigationItemSelectedListener {
+    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+        when (p0.itemId) {
+            R.id.rate -> rateApp(activity!!)
+            R.id.share -> shareApp(activity!!)
+            R.id.privacy_policy -> openPrivacyPolicy(activity!!)
+            R.id.exit -> activity?.finish()
+            R.id.settingsFragment -> navigateToSettings()
+        }
+        return true
+    }
+
+    private fun navigateToSettings() {
+        this.findNavController()
+            .navigate(LevelsFragmentDirections.actionLevelsFragmentToSettingsFragment())
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +50,11 @@ class LevelsFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         val dataSource = LevelDatabase.getInstance(application).levelDao
         val viewModelFactory = LevelsViewModelFactory(dataSource)
-        val viewModel = ViewModelProviders.of(this, viewModelFactory).get(LevelsViewModel::class.java)
+        val viewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(LevelsViewModel::class.java)
 
-
-
+        activity?.findViewById<NavigationView>(R.id.nav_view)
+            ?.setNavigationItemSelectedListener(this)
         val adapter = LevelsAdapter(LevelListener { level ->
             viewModel.onLevelClicked(level)
         })
@@ -58,14 +79,12 @@ class LevelsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater?.inflate(R.menu.overflow_menu, menu)
-    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return NavigationUI.onNavDestinationSelected(item!!,
-            view!!.findNavController())
+        return NavigationUI.onNavDestinationSelected(
+            item!!,
+            view!!.findNavController()
+        )
                 || super.onOptionsItemSelected(item)
     }
 }

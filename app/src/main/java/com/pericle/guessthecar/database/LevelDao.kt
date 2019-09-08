@@ -2,7 +2,6 @@ package com.pericle.guessthecar.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.pericle.guessthecar.entity.Level
 
 @Dao
 interface LevelDao {

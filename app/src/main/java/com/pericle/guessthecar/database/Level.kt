@@ -1,8 +1,11 @@
-package com.pericle.guessthecar.entity
+package com.pericle.guessthecar.database
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.pericle.guessthecar.entity.Car
+import com.pericle.guessthecar.entity.QuestionType
+import com.pericle.guessthecar.entity.countryOf
 import kotlinx.android.parcel.Parcelize
 
 
