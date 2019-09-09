@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="car"
+            type="com.pericle.guessthecar.entity.Car" />
+
+        <variable
+            name="viewModel"
+            type="com.pericle.guessthecar.quiz.QuizViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/rectangle_white_normal"
+            android:enabled="@{viewModel.nextBtnActive}"
+            android:onClick="@{() -> viewModel.onNextClick()}"
+            android:text="@{viewModel.nextBtnText}"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Next" />
+
+        <Button
+            android:id="@+id/button2"
+            style="@style/AnswerButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
+            android:text="@{viewModel.fourthAnswer}"
+            android:textAllCaps="false"
+            app:isCorrect="@{viewModel.isFourthCorrect}"
+            app:layout_constraintBottom_toTopOf="@+id/btn_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button3" />
+
+        <Button
+            android:id="@+id/button3"
+            style="@style/AnswerButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
+            android:text="@{viewModel.thirdAnswer}"
+            android:textAllCaps="false"
+            app:isCorrect="@{viewModel.isThirdCorrect}"
+            app:layout_constraintBottom_toBottomOf="@+id/button2"
+            app:layout_constraintEnd_toStartOf="@+id/button2"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/button4"
+            style="@style/AnswerButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
+            android:text="@{viewModel.secAnswer}"
+            app:isCorrect="@{viewModel.isSecondCorrect}"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button5"
+            tools:text="Ferrari FF" />
+
+        <Button
+            android:id="@+id/button5"
+            style="@style/AnswerButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/rectangle_white_normal"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/acme"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{(view) -> viewModel.onAnswerClick(view)}"
+            android:text="@{viewModel.firstAnswer}"
+            android:textSize="18sp"
+            app:isCorrect="@{viewModel.isFirstCorrect}"
+            app:layout_constraintBottom_toBottomOf="@+id/button4"
+            app:layout_constraintEnd_toStartOf="@+id/button4"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Pagani Zonda" />
+
+        <ImageButton
+            android:id="@+id/soundButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:onClick="@{() -> viewModel.onSoundClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@{viewModel.soundImage}"
+            tools:src="@drawable/ic_speaker" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="32dp"
+            app:carImage="@{viewModel.currentImage}"
+            app:layout_constraintBottom_toTopOf="@+id/button5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/soundButton"
+            tools:src="@drawable/car1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

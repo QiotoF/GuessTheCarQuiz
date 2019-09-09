@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
     private var job = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + job)
     private lateinit var levelDao: LevelDao
-//    private lateinit var carDao: CarDao
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +69,12 @@ class MainActivity : AppCompatActivity() {
         levelDao = LevelDatabase.getInstance(application).levelDao
 //        carDao = LevelDatabase.getInstance(application).carDao
         uiScope.launch {
-            insertAll(cars)
+            insertAll()
         }
 
     }
 
-    private suspend fun insertAll(cars: List<Car>) {
+    private suspend fun insertAll() {
         withContext(Dispatchers.IO) {
 
             levelDao.insert(

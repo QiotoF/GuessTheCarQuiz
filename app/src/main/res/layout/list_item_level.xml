@@ -63,6 +63,7 @@
                 android:background="#70000000"
                 android:fontFamily="cursive"
                 android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="@{level.name}"
                 android:textColor="@android:color/background_light"
                 android:textSize="36sp"

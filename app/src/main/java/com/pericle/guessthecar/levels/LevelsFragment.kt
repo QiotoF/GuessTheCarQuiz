@@ -81,9 +81,9 @@ class LevelsFragment : Fragment(), NavigationView.OnNavigationItemSelectedListen
     }
 
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return NavigationUI.onNavDestinationSelected(
-            item!!,
+            item,
             view!!.findNavController()
         )
                 || super.onOptionsItemSelected(item)
