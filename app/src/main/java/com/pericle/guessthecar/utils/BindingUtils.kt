@@ -25,10 +25,9 @@ fun Button.setIsCorrect(answer: Answer?) {
 }
 
 @BindingAdapter("carImage")
-fun ImageView.setCarImage(car: Car?) {
-    car?.let {
-        val imgUri = car.images.random()/*.toUri().buildUpon().scheme("https").build()*/
-        this.load(imgUri) {
+fun ImageView.setCarImage(image: String?) {
+    image?.let {
+        this.load(image) {
             crossfade(true)
             placeholder(R.drawable.loading_animation)
             error(R.drawable.ic_broken_image)
@@ -36,6 +35,19 @@ fun ImageView.setCarImage(car: Car?) {
         }
     }
 }
+
+//@BindingAdapter("carImage")
+//fun ImageView.setCarImage(car: Car?) {
+//    car?.let {
+//        val imgUri = car.images.random()/*.toUri().buildUpon().scheme("https").build()*/
+//        this.load(imgUri) {
+//            crossfade(true)
+//            placeholder(R.drawable.loading_animation)
+//            error(R.drawable.ic_broken_image)
+//            transformations(RoundedCornersTransformation(20.0F))
+//        }
+//    }
+//}
 
 @BindingAdapter("android:src")
 fun ImageView.setImageViewResource(src: Int) {

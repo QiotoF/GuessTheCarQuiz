@@ -34,6 +34,12 @@ class QuizViewModel(
     val score: LiveData<Int>
         get() = _score
 
+    private val _currentImage = Transformations.map(currentCar) {
+        it.images.random()
+    }
+    val currentImage: LiveData<String>
+        get() = _currentImage
+
     private lateinit var answers: MutableList<String?>
     private val _firstAnswer = MutableLiveData<String>()
     val firstAnswer: LiveData<String>

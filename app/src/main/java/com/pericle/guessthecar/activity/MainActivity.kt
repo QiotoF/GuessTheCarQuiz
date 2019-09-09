@@ -1,5 +1,7 @@
 package com.pericle.guessthecar.activity
 
+import android.content.pm.ActivityInfo
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -9,17 +11,16 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.pericle.guessthecar.R
-import com.pericle.guessthecar.database.*
+import com.pericle.guessthecar.database.Level
+import com.pericle.guessthecar.database.LevelDao
+import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import com.pericle.guessthecar.entity.Car
-import com.pericle.guessthecar.database.Level
 import com.pericle.guessthecar.entity.QuestionType
 import kotlinx.coroutines.*
 
 
-class MainActivity : AppCompatActivity(){
-
+class MainActivity : AppCompatActivity() {
 
 
     private lateinit var drawerLayout: DrawerLayout
@@ -32,12 +33,20 @@ class MainActivity : AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val screenLayoutSize =
+            resources.configuration.screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
+        if (screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_SMALL || screenLayoutSize == Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+            requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        }
+
         val binding =
-            DataBindingUtil.setContentView<ActivityMainBinding>(this,
-                R.layout.activity_main
+            DataBindingUtil.setContentView<ActivityMainBinding>(
+                this,
+                com.pericle.guessthecar.R.layout.activity_main
             )
         drawerLayout = binding.drawerLayout
-        val navController = this.findNavController(R.id.nav_host_fragment)
+        val navController = this.findNavController(com.pericle.guessthecar.R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
         // prevent nav gesture if not on start destination
@@ -72,19 +81,19 @@ class MainActivity : AppCompatActivity(){
             levelDao.insert(
                 Level(
                     "Brands", QuestionType.BRAND,
-                    R.drawable.logo
+                    com.pericle.guessthecar.R.drawable.logo
                 )
             )
             levelDao.insert(
                 Level(
                     "Models", QuestionType.MODEL,
-                    R.drawable.car1
+                    com.pericle.guessthecar.R.drawable.car1
                 )
             )
             levelDao.insert(
                 Level(
                     "Countries", QuestionType.COUNTRY,
-                    R.drawable.countries
+                    com.pericle.guessthecar.R.drawable.countries
                 )
             )
 
@@ -95,7 +104,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = this.findNavController(R.id.nav_host_fragment)
+        val navController = this.findNavController(com.pericle.guessthecar.R.id.nav_host_fragment)
         return NavigationUI.navigateUp(navController, appBarConfiguration)
     }
 
