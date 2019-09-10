@@ -5,7 +5,6 @@ import android.R
 import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -44,14 +43,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun addData() {
         val db = FirebaseFirestore.getInstance()
         val storage = FirebaseStorage.getInstance()
-        // Create a storage reference from our app
         val storageRef = storage.reference
         val carsRef = storageRef.child("cars")
         carsRef.listAll().addOnCompleteListener {
             val cars = mutableMapOf<String, Car>()
-            val fuck2 = it.result
-            val fuck3 = fuck2?.items
-            for (item in fuck3!!) {
+            val result = it.result
+            val items = result?.items
+            for (item in items!!) {
                 val name = item.name.substringBeforeLast(" ")
                 val brand = name.substringBefore(" ")
                 val model = name.substringAfter(" ")
@@ -66,7 +64,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 }
                 item.downloadUrl.addOnCompleteListener { uri ->
                     cars[name]?.images?.add(uri.result.toString())
-                    if (item == fuck3.last()) {
+                    if (item == items.last()) {
                         for (curcar in cars) {
                             db.collection("cars").document(curcar.key).set(curcar.value)
                         }

@@ -68,5 +68,3 @@ fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {
 
 fun Level.checkAnswer(car: Car?, answer: String?): Boolean = answerType(car) == answer
 
-val Level.formattedScore: String
-    get() = this.highScore.toString() + "/100"

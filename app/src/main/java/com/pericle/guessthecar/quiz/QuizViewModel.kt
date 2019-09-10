@@ -18,18 +18,17 @@ import kotlinx.coroutines.*
 
 
 class QuizViewModel(
-    val level: Level,
-    val levelDao: LevelDao,
-    val app: Application
+    private val level: Level,
+    private val levelDao: LevelDao,
+    private val app: Application
 ) : AndroidViewModel(app) {
-
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private var cars = listOf<QuizItem>()
     private lateinit var carIterator: ListIterator<QuizItem>
-    val currentCar = MutableLiveData<Car>()
+    private val currentCar = MutableLiveData<Car>()
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int>
         get() = _score
@@ -44,14 +43,28 @@ class QuizViewModel(
     private val _firstAnswer = MutableLiveData<String>()
     val firstAnswer: LiveData<String>
         get() = _firstAnswer
-    val secAnswer = MutableLiveData<String>()
-    val thirdAnswer = MutableLiveData<String>()
-    val fourthAnswer = MutableLiveData<String>()
+    private val _secAnswer = MutableLiveData<String>()
+    val secAnswer: MutableLiveData<String>
+        get() = _secAnswer
+    private val _thirdAnswer = MutableLiveData<String>()
+    val thirdAnswer: MutableLiveData<String>
+        get() = _thirdAnswer
+    private val _fourthAnswer = MutableLiveData<String>()
+    val fourthAnswer: MutableLiveData<String>
+        get() = _fourthAnswer
 
-    val isFirstCorrect = MutableLiveData<Answer>()
-    val isSecondCorrect = MutableLiveData<Answer>()
-    val isThirdCorrect = MutableLiveData<Answer>()
-    val isFourthCorrect = MutableLiveData<Answer>()
+    private val _isFirstCorrect = MutableLiveData<Answer>()
+    val isFirstCorrect: MutableLiveData<Answer>
+        get() = _isFirstCorrect
+    private val _isSecondCorrect = MutableLiveData<Answer>()
+    val isSecondCorrect: MutableLiveData<Answer>
+        get() = _isSecondCorrect
+    private val _isThirdCorrect = MutableLiveData<Answer>()
+    val isThirdCorrect: MutableLiveData<Answer>
+        get() = _isThirdCorrect
+    private val _isFourthCorrect = MutableLiveData<Answer>()
+    val isFourthCorrect: MutableLiveData<Answer>
+        get() = _isFourthCorrect
 
     private val _nextBtnText = MutableLiveData<String>()
     val nextBtnText: LiveData<String>
@@ -68,7 +81,6 @@ class QuizViewModel(
         get() = _nextBtnActive
 
     private var onWrongAnswered = false
-
     private val correctSound = SoundPool.Builder().build()
     private val correctSoundId = correctSound.load(app, R.raw.correct, 0)
     private val wrongSound = SoundPool.Builder().build()
@@ -135,14 +147,14 @@ class QuizViewModel(
 
     private fun setAnswers() {
         answers = level.createAnswerList(currentCar.value, cars as List<Car>)
-        this._firstAnswer.value = answers[0]
-        secAnswer.value = answers[1]
-        thirdAnswer.value = answers[2]
-        fourthAnswer.value = answers[3]
-        isFirstCorrect.value = Answer.ANY
-        isSecondCorrect.value = Answer.ANY
-        isThirdCorrect.value = Answer.ANY
-        isFourthCorrect.value = Answer.ANY
+        _firstAnswer.value = answers[0]
+        _secAnswer.value = answers[1]
+        _thirdAnswer.value = answers[2]
+        _fourthAnswer.value = answers[3]
+        _isFirstCorrect.value = Answer.ANY
+        _isSecondCorrect.value = Answer.ANY
+        _isThirdCorrect.value = Answer.ANY
+        _isFourthCorrect.value = Answer.ANY
     }
 
     fun onAnswerClick(view: View) {
@@ -162,10 +174,10 @@ class QuizViewModel(
         } else {
             onWrongAnswered = true
             when (level.answerType(currentCar.value as Car)) {
-                this._firstAnswer.value -> isFirstCorrect.value = Answer.TRUE
-                secAnswer.value -> isSecondCorrect.value = Answer.TRUE
-                thirdAnswer.value -> isThirdCorrect.value = Answer.TRUE
-                fourthAnswer.value -> isFourthCorrect.value = Answer.TRUE
+                _firstAnswer.value -> _isFirstCorrect.value = Answer.TRUE
+                _secAnswer.value -> _isSecondCorrect.value = Answer.TRUE
+                _thirdAnswer.value -> _isThirdCorrect.value = Answer.TRUE
+                _fourthAnswer.value -> _isFourthCorrect.value = Answer.TRUE
             }
             btn.setIsCorrect(Answer.FALSE)
             _nextBtnText.value = "Finish"

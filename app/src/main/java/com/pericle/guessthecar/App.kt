@@ -21,18 +21,7 @@ class App : Application() {
         val db = FirebaseFirestore.getInstance()
         uiScope.launch {
             loadCars(db)
-
         }
-
-//        val storage = FirebaseStorage.getInstance()
-//        // Create a storage reference from our app
-//        val storageRef = storage.reference
-//        val fuck = storageRef.listAll().addOnCompleteListener {
-//            val fuck2 = it.result
-//            val fuck3 = fuck2?.items
-//        }
-//
-//        var ch = storageRef.child("Lamborghini Reventon.jpg")
     }
 
     private suspend fun loadCars(db: FirebaseFirestore) {

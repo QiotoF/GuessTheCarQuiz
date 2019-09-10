@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(com.pericle.guessthecar.R.id.nav_host_fragment)
         NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
         appBarConfiguration = AppBarConfiguration(navController.graph, drawerLayout)
-        // prevent nav gesture if not on start destination
         navController.addOnDestinationChangedListener { nc: NavController, nd: NavDestination, bundle: Bundle? ->
             if (nd.id == nc.graph.startDestination) {
                 drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
@@ -57,17 +56,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         NavigationUI.setupWithNavController(binding.navView, navController)
-//        binding.navView.setNavigationItemSelectedListener(this)
-        val cars = listOf<Car>(
-//            Car(listOf("dodge_viper_1.jpg"), "Dodge", "Viper", "USA"),
-//            Car(listOf("mini_cooper_1.jpg"), "Mini", "Cooper", "USA"),
-//            Car(listOf("nissan_gtr_1.jpg"), "Nissan", "GTR", "Japan"),
-//            Car(listOf("saleen_s7_1.jpg"), "Saleen", "S7", "USA"),
-//            Car(listOf("toyota_supra_1.jpg", "toyota_supra_2.jpg", "toyota_supra_3.jpg"), "Toyota", "Supra", "Japan")
-        )
         val application = requireNotNull(this).application
         levelDao = LevelDatabase.getInstance(application).levelDao
-//        carDao = LevelDatabase.getInstance(application).carDao
         uiScope.launch {
             insertAll()
         }
@@ -95,10 +85,6 @@ class MainActivity : AppCompatActivity() {
                     com.pericle.guessthecar.R.drawable.countries
                 )
             )
-
-//            for (car in cars) {
-//                carDao.insert(car)
-//            }
         }
     }
 

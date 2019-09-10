@@ -11,14 +11,6 @@ class LevelRepository(var levelDao: LevelDao) {
 
 
     suspend fun deleteAllProgress() {
-//        val levels = levelDao.getAllLevels()
-//        withContext(Dispatchers.IO) {
-//            for (level in levels.value!!) {
-//                level.highScore = 0
-//                levelDao.updateLevel(level)
-//
-//            }
-//        }
         withContext(Dispatchers.IO) {
             levelDao.updateLevel(
                 Level(

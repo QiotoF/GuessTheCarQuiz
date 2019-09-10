@@ -13,7 +13,6 @@ abstract class LevelDatabase : RoomDatabase() {
     /**
      * Connects the carDao to the DAO.
      */
-//    abstract val carDao: CarDao
     abstract val levelDao: LevelDao
 
     /**

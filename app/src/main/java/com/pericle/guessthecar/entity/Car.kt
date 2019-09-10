@@ -5,8 +5,6 @@ data class Car(
 
     var brand: String = "",
 
-//    var country: String = "",
-
     override var images: MutableList<String> = mutableListOf(),
 
     var model: String = ""
