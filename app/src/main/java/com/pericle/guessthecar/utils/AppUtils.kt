@@ -46,7 +46,3 @@ fun openPrivacyPolicy(activity: Activity) {
     val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://pericle.ucoz.net/index/guess-the-car-quiz/0-4"))
     activity.startActivity(browserIntent)
 }
-
-operator fun Level.compareTo(score: Int): Int {
-    return highScore.compareTo(score)
-}

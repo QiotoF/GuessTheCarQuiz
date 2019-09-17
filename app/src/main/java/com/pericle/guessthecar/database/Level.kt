@@ -25,9 +25,8 @@ data class Level(
 
 ) : Parcelable
 
-fun <T> Level.answerType(it: T?): String? {
-    if (it is Car) {
-        return (it as Car).let {
+fun Level.answerType(it: Car?): String? {
+        return it?.let {
             when (questionType) {
                 QuestionType.BRAND -> {
                     it.brand
@@ -40,10 +39,6 @@ fun <T> Level.answerType(it: T?): String? {
                 }
             }
         }
-    } else {
-        return null
-    }
-
 }
 
 fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {

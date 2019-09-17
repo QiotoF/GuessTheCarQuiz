@@ -5,11 +5,11 @@ data class Car(
 
     var brand: String = "",
 
-    override var images: MutableList<String> = mutableListOf(),
+    var images: MutableList<String> = mutableListOf(),
 
     var model: String = ""
 
-): QuizItem(images)
+)
 
 fun countryOf(car: Car?): String =
     when(car?.brand) {
@@ -24,15 +24,3 @@ fun countryOf(car: Car?): String =
         else -> "Chuvashia"
     }
 
-fun countryOf(brand: String?): String =
-    when(brand) {
-        "Dodge" -> "USA"
-        "Ferrari" -> "Italy"
-        "Lamborghini" -> "Italy"
-        "Mini" -> "United Kingdom"
-        "Nissan" -> "Japan"
-        "Pagani" -> "Italy"
-        "Saleen" -> "USA"
-        "Toyota" -> "Japan"
-        else -> "Chuvashia"
-    }

@@ -36,19 +36,6 @@ fun ImageView.setCarImage(image: String?) {
     }
 }
 
-//@BindingAdapter("carImage")
-//fun ImageView.setCarImage(car: Car?) {
-//    car?.let {
-//        val imgUri = car.images.random()/*.toUri().buildUpon().scheme("https").build()*/
-//        this.load(imgUri) {
-//            crossfade(true)
-//            placeholder(R.drawable.loading_animation)
-//            error(R.drawable.ic_broken_image)
-//            transformations(RoundedCornersTransformation(20.0F))
-//        }
-//    }
-//}
-
 @BindingAdapter("android:src")
 fun ImageView.setImageViewResource(src: Int) {
     this.setImageResource(src)

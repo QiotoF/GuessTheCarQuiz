@@ -10,9 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.pericle.guessthecar.App
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.utils.compareTo
 import com.pericle.guessthecar.database.*
-import com.pericle.guessthecar.entity.*
+import com.pericle.guessthecar.entity.Answer
+import com.pericle.guessthecar.entity.Car
 import com.pericle.guessthecar.utils.setIsCorrect
 import kotlinx.coroutines.*
 
@@ -26,8 +26,8 @@ class QuizViewModel(
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    private var cars = listOf<QuizItem>()
-    private lateinit var carIterator: ListIterator<QuizItem>
+    private var cars = listOf<Car>()
+    private lateinit var carIterator: ListIterator<Car>
     private val currentCar = MutableLiveData<Car>()
     private val _score = MutableLiveData<Int>()
     val score: LiveData<Int>
@@ -116,7 +116,7 @@ class QuizViewModel(
 
     fun onNextClick() {
         if (!carIterator.hasNext() || onWrongAnswered) {
-            if (level < score.value!!) {
+            if (level.highScore < score.value!!) {
                 uiScope.launch {
                     updateLevel()
                 }
@@ -130,7 +130,6 @@ class QuizViewModel(
             _score.value = _score.value?.inc()
         }
     }
-
 
 
     private suspend fun updateLevel() {
