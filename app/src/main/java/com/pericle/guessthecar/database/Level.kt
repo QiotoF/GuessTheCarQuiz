@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.pericle.guessthecar.entity.Car
 import com.pericle.guessthecar.entity.QuestionType
-import com.pericle.guessthecar.entity.countryOf
+import com.pericle.guessthecar.entity.country
 import kotlinx.android.parcel.Parcelize
 
 
@@ -26,19 +26,19 @@ data class Level(
 ) : Parcelable
 
 fun Level.answerType(it: Car?): String? {
-        return it?.let {
-            when (questionType) {
-                QuestionType.BRAND -> {
-                    it.brand
-                }
-                QuestionType.MODEL -> {
-                    it.run { it.brand + " " + it.model }
-                }
-                QuestionType.COUNTRY -> {
-                    countryOf(it)
-                }
+    return it?.let {
+        when (questionType) {
+            QuestionType.BRAND -> {
+                it.brand
+            }
+            QuestionType.MODEL -> {
+                it.run { it.brand + " " + it.model }
+            }
+            QuestionType.COUNTRY -> {
+                it.country()
             }
         }
+    }
 }
 
 fun Level.createAnswerList(car: Car?, cars: List<Car>): MutableList<String?> {

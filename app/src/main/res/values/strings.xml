@@ -10,4 +10,15 @@
     <string name="share">Share</string>
     <string name="privacy_policy">Privacy Policy</string>
     <string name="exit">Exit</string>
+    <string name="usa">USA</string>
+    <string name="italy">Italy</string>
+    <string name="united_kingdom">United Kingdom</string>
+    <string name="japan">Japan</string>
+    <string name="germany">Germany</string>
+    <string name="france">France</string>
+    <string name="china">China</string>
+    <string name="south_korea">South Korea</string>
+    <string name="sweden">Sweden</string>
+    <string name="russia">Russia</string>
+    <string name="chuvashia">Chuvashia</string>
 </resources>
