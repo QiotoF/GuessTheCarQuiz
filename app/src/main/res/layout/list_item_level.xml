@@ -26,6 +26,7 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:onClick="@{() -> clickListener.onClick(level)}"
+        app:cardBackgroundColor="#F1F1F1"
         card_view:cardCornerRadius="8dp"
         card_view:cardElevation="4dp">
 
@@ -54,28 +55,6 @@
                 app:layout_constraintVertical_bias="0.0"
                 tools:src="@drawable/car3" />
 
-            <TextView
-                android:id="@+id/level_title"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="#70000000"
-                android:fontFamily="cursive"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="@{level.name}"
-                android:textColor="@android:color/background_light"
-                android:textSize="36sp"
-                android:typeface="normal"
-                app:layout_constraintBottom_toBottomOf="@+id/level_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.03"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/level_image"
-                app:layout_constraintVertical_bias="1.0"
-                tools:text="Models" />
-
             <ProgressBar
                 android:id="@+id/level_progress_bar"
                 style="?android:attr/progressBarStyleHorizontal"
@@ -88,6 +67,28 @@
                 app:layout_constraintEnd_toStartOf="@+id/level_progress_text"
                 app:layout_constraintStart_toStartOf="@+id/level_image"
                 app:layout_constraintTop_toBottomOf="@+id/level_title" />
+
+            <TextView
+                android:id="@+id/level_title"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#70000000"
+                android:fontFamily="@font/allan"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@{level.name}"
+                android:textColor="#F1F1F1"
+                android:textSize="36sp"
+                android:typeface="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/level_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.03"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/level_image"
+                app:layout_constraintVertical_bias="1.0"
+                tools:text="Models" />
 
             <TextView
                 android:id="@+id/level_progress_text"

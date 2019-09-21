@@ -23,9 +23,9 @@ class App : Application() {
         mContext = this
         Timber.plant(Timber.DebugTree())
         val db = FirebaseFirestore.getInstance()
-        uiScope.launch {
+//        uiScope.launch {
             loadCars(db)
-        }
+//        }
     }
 
     companion object{
@@ -33,31 +33,31 @@ class App : Application() {
         fun getContext() = mContext
     }
 
-    private suspend fun loadCars(db: FirebaseFirestore) {
-        withContext(Dispatchers.IO) {
+    private /*suspend*/ fun loadCars(db: FirebaseFirestore) {
+//        withContext(Dispatchers.IO) {
             db.collection("cars").get()
                 .addOnSuccessListener {
                     Timber.i("Success fetching cars!")
                     if (it != null) {
                         cars = it.toObjects(Car::class.java)
                     }
-                    prefetch()
+//                    prefetch()
                 }
                 .addOnFailureListener {
                     Timber.i(it.message, "Fetching cars failed: %s")
                 }
-        }
+//        }
 
     }
 
-    private fun prefetch() {
-        for (car in cars) {
-            for (img in car.images) {
-                Coil.load(this, img) {
-                    memoryCachePolicy(CachePolicy.DISABLED)
-                }
-            }
-        }
-    }
+//    private fun prefetch() {
+//        for (car in cars) {
+//            for (img in car.images) {
+//                Coil.load(this, img) {
+//                    memoryCachePolicy(CachePolicy.DISABLED)
+//                }
+//            }
+//        }
+//    }
 
 }

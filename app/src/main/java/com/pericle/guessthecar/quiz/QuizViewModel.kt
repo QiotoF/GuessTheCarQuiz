@@ -23,6 +23,10 @@ class QuizViewModel(
     private val app: Application
 ) : AndroidViewModel(app) {
 
+    companion object{
+        const val NUMBER_OF_QUESTIONS = 100
+    }
+
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
@@ -97,13 +101,13 @@ class QuizViewModel(
 
     init {
         initialiseCars()
-        _nextBtnText.value = "Next"
+        _nextBtnText.value = app.getString(R.string.next)
         isSoundOn.value = true
     }
 
 
     private fun initialiseCars() {
-        cars = (this.app as App).cars.shuffled()
+        cars = (this.app as App).cars.shuffled().take(NUMBER_OF_QUESTIONS)
         carIterator = cars.listIterator()
         _score.value = 0
         onNextClick()
@@ -170,6 +174,9 @@ class QuizViewModel(
             btn.setIsCorrect(Answer.TRUE)
             onWrongAnswered = false
             playCorrectSound()
+            if (!carIterator.hasNext()) {
+                _nextBtnText.value = app.getString(R.string.finish)
+            }
         } else {
             onWrongAnswered = true
             when (level.answerType(currentCar.value as Car)) {
@@ -179,7 +186,7 @@ class QuizViewModel(
                 _fourthAnswer.value -> _isFourthCorrect.value = Answer.TRUE
             }
             btn.setIsCorrect(Answer.FALSE)
-            _nextBtnText.value = "Finish"
+            _nextBtnText.value = "app.getString(R.string.finish)"
             playWrongSound()
         }
     }
