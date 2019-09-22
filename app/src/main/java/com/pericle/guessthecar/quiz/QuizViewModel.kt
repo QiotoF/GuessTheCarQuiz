@@ -23,9 +23,17 @@ class QuizViewModel(
     private val app: Application
 ) : AndroidViewModel(app) {
 
-    companion object{
+    companion object {
         const val NUMBER_OF_QUESTIONS = 100
+        const val NUMBER_OF_LIFES = 1
     }
+
+    private var _noMoreQuestions: Boolean = false
+    val noMoreQuestions : Boolean
+        get() = _noMoreQuestions
+    private var _rewarded = false
+    val rewarded: Boolean
+        get() = _rewarded
 
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -84,6 +92,7 @@ class QuizViewModel(
     val nextBtnActive: LiveData<Boolean>
         get() = _nextBtnActive
 
+    private var lifes = NUMBER_OF_LIFES
     private var onWrongAnswered = false
     private val correctSound = SoundPool.Builder().build()
     private val correctSoundId = correctSound.load(app, R.raw.correct, 0)
@@ -119,7 +128,10 @@ class QuizViewModel(
 
 
     fun onNextClick() {
-        if (!carIterator.hasNext() || onWrongAnswered) {
+        if (!carIterator.hasNext() || lifes <= 0) {
+            if (!carIterator.hasNext()) {
+                _noMoreQuestions = true
+            }
             if (level.highScore < score.value!!) {
                 uiScope.launch {
                     updateLevel()
@@ -137,7 +149,7 @@ class QuizViewModel(
 
 
     private suspend fun updateLevel() {
-        level.highScore = if (onWrongAnswered) _score.value!! - 1 else _score.value!!
+        level.highScore = if (lifes <= 0) _score.value!! - 1 else _score.value!!
         withContext(Dispatchers.IO) {
             levelDao.updateLevel(level)
         }
@@ -179,6 +191,7 @@ class QuizViewModel(
             }
         } else {
             onWrongAnswered = true
+            lifes--
             when (level.answerType(currentCar.value as Car)) {
                 _firstAnswer.value -> _isFirstCorrect.value = Answer.TRUE
                 _secAnswer.value -> _isSecondCorrect.value = Answer.TRUE
@@ -186,7 +199,7 @@ class QuizViewModel(
                 _fourthAnswer.value -> _isFourthCorrect.value = Answer.TRUE
             }
             btn.setIsCorrect(Answer.FALSE)
-            _nextBtnText.value = "app.getString(R.string.finish)"
+            _nextBtnText.value = app.getString(R.string.finish)
             playWrongSound()
         }
     }
@@ -205,5 +218,12 @@ class QuizViewModel(
 
     fun onSoundClick() {
         isSoundOn.value = !isSoundOn.value!!
+    }
+
+    fun onRewarded() {
+        _rewarded = true
+        lifes++
+        _onFinish.value = false
+        _nextBtnText.value = app.getString(R.string.next)
     }
 }
