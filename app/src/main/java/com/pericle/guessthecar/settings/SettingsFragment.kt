@@ -77,8 +77,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun showDeleteDialog() {
         AlertDialog.Builder(context!!)
-            .setTitle("Warning")
-            .setMessage("Are you sure you want to delete all progress?")
+            .setTitle(getString(com.pericle.guessthecar.R.string.warning))
+            .setMessage(getString(com.pericle.guessthecar.R.string.delete_all_progress))
 
             // Specifying a listener allows you to take an action before dismissing the dialog.
             // The dialog is automatically dismissed when a dialog button is clicked.

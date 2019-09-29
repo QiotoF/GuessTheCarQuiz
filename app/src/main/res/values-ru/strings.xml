@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Угадай автомобиль</string>
+    <string name="china">Китай</string>
+    <string name="chuvashia">Чувашия</string>
+    <string name="exit">Выход</string>
+    <string name="finish">Конец</string>
+    <string name="france">Франция</string>
+    <string name="germany">Германия</string>
+    <string name="italy">Италия</string>
+    <string name="japan">Япония</string>
+    <string name="next">Дальше</string>
+    <string name="rate">Оценить</string>
+    <string name="russia">Россия</string>
+    <string name="settings">Настройки</string>
+    <string name="share">Поделиться</string>
+    <string name="south_korea">Южная Корея</string>
+    <string name="sweden">Швеция</string>
+    <string name="united_kingdom">Великобритания</string>
+    <string name="usa">США</string>
+    <string name="welcome_messages">Привет, %1$s! У вас %2$d новых сообщений.</string>
+    <string name="extra_life">Посмотреть видео, чтобы получить дополнительную жизнь?</string>
+    <string name="models">Модели</string>
+    <string name="brands">Бренды</string>
+    <string name="another_chance">Ещё один шанс?</string>
+    <string name="countries">Страны</string>
+    <string name="warning">Внимание</string>
+    <string name="delete_all_progress">Удалить весь прогресс?</string>
+    <string name="delete_progress">Удалить весь прогресс</string>
+    <string name="quit_game">Вы уверены, что хотите выйти? Ваш текущий счёт будет потерян</string>
+</resources>

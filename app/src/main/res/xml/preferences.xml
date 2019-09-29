@@ -5,7 +5,7 @@
     <Preference
         android:icon="@drawable/ic_baseline_delete_outline_24px"
         app:key="delete"
-        app:title="Delete all progress" />
+        app:title="@string/delete_progress" />
 
 <!--    <Preference-->
 <!--        app:key="add"-->

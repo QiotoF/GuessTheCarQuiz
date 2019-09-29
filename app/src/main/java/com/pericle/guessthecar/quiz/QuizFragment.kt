@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -30,6 +31,39 @@ class QuizFragment : Fragment() {
     private lateinit var rewardedAd: RewardedAd
     private lateinit var viewModel: QuizViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // This callback will only be called when MyFragment is at least Started.
+        requireActivity().onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    showQuitDialog()
+                }
+
+            })
+
+    }
+
+    private fun showQuitDialog() {
+        AlertDialog.Builder(context!!)
+            .setTitle(getString(com.pericle.guessthecar.R.string.warning))
+            .setMessage(getString(com.pericle.guessthecar.R.string.quit_game))
+
+            // Specifying a listener allows you to take an action before dismissing the dialog.
+            // The dialog is automatically dismissed when a dialog button is clicked.
+            .setPositiveButton(R.string.yes, DialogInterface.OnClickListener { dialog, which ->
+                finishQuiz()
+            })
+
+            // A null listener allows the button to dismiss the dialog and take no further action.
+            .setNegativeButton(R.string.no) { dialog, which ->
+
+            }
+            .show()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,10 +83,10 @@ class QuizFragment : Fragment() {
         binding.viewModel = viewModel
 
         mInterstitialAd = InterstitialAd(this.context)
-        mInterstitialAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterstitialAd.adUnitId = getString(com.pericle.guessthecar.R.string.interstitial_ad_id)
         mInterstitialAd.loadAd(AdRequest.Builder().build())
         rewardedAd = RewardedAd(
-            this.context, "ca-app-pub-3940256099942544/5224354917"
+            this.context, getString(com.pericle.guessthecar.R.string.rewarded_ad_id)
         )
         val adLoadCallback = object : RewardedAdLoadCallback() {
             override fun onRewardedAdLoaded() {
@@ -104,8 +138,8 @@ class QuizFragment : Fragment() {
 
     private fun showRewardedAdDialog() {
         AlertDialog.Builder(context!!)
-            .setTitle("Another chance?")
-            .setMessage("Do you want to get an extra life by watching a video ad?")
+            .setTitle(getString(com.pericle.guessthecar.R.string.another_chance))
+            .setMessage(getString(com.pericle.guessthecar.R.string.extra_life))
 
             // Specifying a listener allows you to take an action before dismissing the dialog.
             // The dialog is automatically dismissed when a dialog button is clicked.
@@ -137,4 +171,6 @@ class QuizFragment : Fragment() {
             Timber.d("The interstitial wasn't loaded yet.")
         }
     }
+
+
 }

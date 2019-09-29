@@ -11,11 +11,11 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.Level
 import com.pericle.guessthecar.database.LevelDao
 import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.databinding.ActivityMainBinding
-import com.pericle.guessthecar.entity.Car
 import com.pericle.guessthecar.entity.QuestionType
 import kotlinx.coroutines.*
 
@@ -69,20 +69,17 @@ class MainActivity : AppCompatActivity() {
 
             levelDao.insert(
                 Level(
-                    "Brands", QuestionType.BRAND,
-                    com.pericle.guessthecar.R.drawable.logo
+                    getString(R.string.brands), QuestionType.BRAND, R.drawable.logo
                 )
             )
             levelDao.insert(
                 Level(
-                    "Models", QuestionType.MODEL,
-                    com.pericle.guessthecar.R.drawable.car1
+                    getString(R.string.models), QuestionType.MODEL, R.drawable.car1
                 )
             )
             levelDao.insert(
                 Level(
-                    "Countries", QuestionType.COUNTRY,
-                    com.pericle.guessthecar.R.drawable.countries
+                    getString(R.string.countries), QuestionType.COUNTRY, R.drawable.countries
                 )
             )
         }
