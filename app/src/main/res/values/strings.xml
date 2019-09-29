@@ -22,8 +22,8 @@
     <string name="chuvashia">Chuvashia</string>
     <string name="finish">Finish</string>
     <string name="next">Next</string>
-    <string name="interstitial_ad_id" translatable="false">ca-app-pub-3940256099942544/1033173712</string>
-    <string name="rewarded_ad_id" translatable="false">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="interstitial_ad_id" translatable="false">ca-app-pub-7249577618188005/7365715676</string>
+    <string name="rewarded_ad_id" translatable="false">ca-app-pub-7249577618188005/9809326173</string>
     <string name="brands">Brands</string>
     <string name="models">Models</string>
     <string name="countries">Countries</string>

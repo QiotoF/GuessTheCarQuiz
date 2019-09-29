@@ -16,21 +16,21 @@ class LevelRepository(var levelDao: LevelDao) {
                 Level(
                     "Brands",
                     QuestionType.BRAND,
-                    R.drawable.car1
+                    R.drawable.logo
                 )
             )
             levelDao.updateLevel(
                 Level(
                     "Models",
                     QuestionType.MODEL,
-                    R.drawable.car2
+                    R.drawable.car1
                 )
             )
             levelDao.updateLevel(
                 Level(
                     "Countries",
                     QuestionType.COUNTRY,
-                    R.drawable.car3
+                    R.drawable.countries
                 )
             )
         }
