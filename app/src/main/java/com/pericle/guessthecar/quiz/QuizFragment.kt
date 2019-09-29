@@ -43,7 +43,6 @@ class QuizFragment : Fragment() {
                 }
 
             })
-
     }
 
     private fun showQuitDialog() {
