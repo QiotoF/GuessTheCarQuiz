@@ -7,8 +7,8 @@
         app:key="delete"
         app:title="Delete all progress" />
 
-    <Preference
-        app:key="add"
-        app:title="Add data" />
+<!--    <Preference-->
+<!--        app:key="add"-->
+<!--        app:title="Add data" />-->
 
 </PreferenceScreen>

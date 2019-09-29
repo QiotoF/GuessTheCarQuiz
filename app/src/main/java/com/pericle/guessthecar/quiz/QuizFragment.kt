@@ -77,7 +77,9 @@ class QuizFragment : Fragment() {
         viewModel.onFinish.observe(this, Observer {
             it?.let {
                 if (it) {
-                    if (!viewModel.rewarded && rewardedAd.isLoaded && !viewModel.noMoreQuestions) {
+                    if (!viewModel.rewarded && rewardedAd.isLoaded &&
+                        !viewModel.noMoreQuestions && viewModel.highScoreBet
+                    ) {
                         showRewardedAdDialog()
                     } else {
                         finishQuiz()

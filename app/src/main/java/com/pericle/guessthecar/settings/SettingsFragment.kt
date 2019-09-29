@@ -33,11 +33,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
-        findPreference("add").setOnPreferenceClickListener {
-            addData()
-
-            true
-        }
+//        findPreference("add").setOnPreferenceClickListener {
+//            addData()
+//
+//            true
+//        }
     }
 
     private fun addData() {

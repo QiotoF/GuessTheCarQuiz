@@ -28,8 +28,12 @@ class QuizViewModel(
         const val NUMBER_OF_LIFES = 1
     }
 
+    private var _highScoreBet: Boolean = false
+    val highScoreBet: Boolean
+        get() = _highScoreBet
+
     private var _noMoreQuestions: Boolean = false
-    val noMoreQuestions : Boolean
+    val noMoreQuestions: Boolean
         get() = _noMoreQuestions
     private var _rewarded = false
     val rewarded: Boolean
@@ -136,6 +140,8 @@ class QuizViewModel(
                 uiScope.launch {
                     updateLevel()
                 }
+            } else {
+                _highScoreBet = true
             }
             _onFinish.value = true
         } else {
@@ -157,11 +163,11 @@ class QuizViewModel(
 
 
     private fun setCar() {
-        currentCar.value = carIterator.next() as Car
+        currentCar.value = carIterator.next()
     }
 
     private fun setAnswers() {
-        answers = level.createAnswerList(currentCar.value, cars as List<Car>)
+        answers = level.createAnswerList(currentCar.value, cars)
         _firstAnswer.value = answers[0]
         _secAnswer.value = answers[1]
         _thirdAnswer.value = answers[2]
