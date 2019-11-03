@@ -12,13 +12,13 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import com.pericle.guessthecar.R
 import com.pericle.guessthecar.database.Level
 import com.pericle.guessthecar.database.LevelDao
 import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import com.pericle.guessthecar.entity.QuestionType
 import kotlinx.coroutines.*
+import me.msfjarvis.apprate.AppRate
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,7 +67,15 @@ class MainActivity : AppCompatActivity() {
         uiScope.launch {
             insertAll()
         }
+        initAppRate()
+    }
 
+    private fun initAppRate() {
+        AppRate(this)
+            .setShowIfAppHasCrashed(false)
+            .setMinDaysUntilPrompt(1)
+            .setMinLaunchesUntilPrompt(3)
+            .init()
     }
 
     private suspend fun insertAll() {
@@ -75,17 +83,23 @@ class MainActivity : AppCompatActivity() {
 
             levelDao.insert(
                 Level(
-                    getString(R.string.brands), QuestionType.BRAND, R.drawable.logo
+                    getString(com.pericle.guessthecar.R.string.brands),
+                    QuestionType.BRAND,
+                    com.pericle.guessthecar.R.drawable.logo
                 )
             )
             levelDao.insert(
                 Level(
-                    getString(R.string.models), QuestionType.MODEL, R.drawable.car1
+                    getString(com.pericle.guessthecar.R.string.models),
+                    QuestionType.MODEL,
+                    com.pericle.guessthecar.R.drawable.car1
                 )
             )
             levelDao.insert(
                 Level(
-                    getString(R.string.countries), QuestionType.COUNTRY, R.drawable.countries
+                    getString(com.pericle.guessthecar.R.string.countries),
+                    QuestionType.COUNTRY,
+                    com.pericle.guessthecar.R.drawable.countries
                 )
             )
         }

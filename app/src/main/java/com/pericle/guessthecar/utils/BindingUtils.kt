@@ -43,7 +43,7 @@ fun ImageView.setImageViewResource(src: Int) {
 
 @BindingAdapter("app:srcCompat")
 fun ImageButton.setImageButtonResource(src: LiveData<Int>) {
-    src.value?.let { this.load(it) }
+    src.value?.let { this.setImageResource(it) }
 }
 
 @BindingAdapter("progressText")
