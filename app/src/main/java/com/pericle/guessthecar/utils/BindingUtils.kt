@@ -9,7 +9,6 @@ import androidx.lifecycle.LiveData
 import coil.api.load
 import coil.transform.RoundedCornersTransformation
 import com.pericle.guessthecar.R
-import com.pericle.guessthecar.entity.Car
 import com.pericle.guessthecar.entity.Answer
 
 @BindingAdapter("isCorrect")
@@ -38,12 +37,13 @@ fun ImageView.setCarImage(image: String?) {
 
 @BindingAdapter("android:src")
 fun ImageView.setImageViewResource(src: Int) {
-    this.setImageResource(src)
+//    this.setImageResource(src)
+    this.load(src)
 }
 
 @BindingAdapter("app:srcCompat")
 fun ImageButton.setImageButtonResource(src: LiveData<Int>) {
-    src.value?.let { this.setImageResource(it) }
+    src.value?.let { this.load(it) }
 }
 
 @BindingAdapter("progressText")
