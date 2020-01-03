@@ -12,13 +12,15 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import com.codemybrainsout.ratingdialog.RatingDialog
 import com.pericle.guessthecar.database.Level
 import com.pericle.guessthecar.database.LevelDao
 import com.pericle.guessthecar.database.LevelDatabase
 import com.pericle.guessthecar.databinding.ActivityMainBinding
 import com.pericle.guessthecar.entity.QuestionType
+import com.pericle.guessthecar.utils.APP_RATE_SESSION
+import com.pericle.guessthecar.utils.APP_RATE_THRESHOLDS
 import kotlinx.coroutines.*
-import me.msfjarvis.apprate.AppRate
 
 
 class MainActivity : AppCompatActivity() {
@@ -67,15 +69,17 @@ class MainActivity : AppCompatActivity() {
         uiScope.launch {
             insertAll()
         }
-        initAppRate()
+
+        initSmartAppRate()
     }
 
-    private fun initAppRate() {
-        AppRate(this)
-            .setShowIfAppHasCrashed(false)
-            .setMinDaysUntilPrompt(1)
-            .setMinLaunchesUntilPrompt(3)
-            .init()
+    private fun initSmartAppRate() {
+        val ratingDialog = RatingDialog.Builder(this)
+            .threshold(APP_RATE_THRESHOLDS)
+            .session(APP_RATE_SESSION)
+            .onRatingBarFormSumbit { }.build()
+
+        ratingDialog.show()
     }
 
     private suspend fun insertAll() {
